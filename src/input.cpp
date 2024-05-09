@@ -70,7 +70,7 @@ class InputField
             Color colorModificado = BLACK; 
             colorModificado.a = (unsigned char)(0.5 * 255); 
             DrawRectangleRec(campo, colorModificado);
-            // DrawText(text.c_str(), campo.x + PADDINGX, campo.y + PADDINGY , FONT_SIZE, WHITE);
+            DrawText(text.c_str(), campo.x + PADDINGX, campo.y + PADDINGY , FONT_SIZE, WHITE);
         }
         void dibujar(float crlf) 
         {

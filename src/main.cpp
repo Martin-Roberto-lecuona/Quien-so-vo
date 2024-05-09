@@ -11,8 +11,6 @@ int main() {
     InitWindow(screenWidth, screenHeight, "Quien so vo?");
     SetTargetFPS(60);
 
-    Tablero tablero;
-    InputField inputField(100,800,500,60);
     Inicio inicio(screenWidth,screenHeight,"./img/fondo-inicio.png");
     
     while (inicio.getVisible() && !WindowShouldClose())
@@ -28,7 +26,8 @@ int main() {
         }
         EndDrawing();
     }
-    
+    Tablero tablero;
+    InputField inputField(100,800,500,60);
     while (!WindowShouldClose()) 
     {
         BeginDrawing();
@@ -45,7 +44,7 @@ int main() {
             tablero.onClick(mousePos);
         }
         if(inputField.overflow()) 
-                inputField.dibujar(1.0f);
+            inputField.dibujar(1.0f);
         EndDrawing();
     }
 
