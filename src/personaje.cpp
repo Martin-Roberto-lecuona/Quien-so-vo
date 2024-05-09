@@ -31,12 +31,15 @@ class Personaje {
             DrawTextureEx(textura, { rectangulo.x, rectangulo.y }, 0.0f, escalaAncho, colorModificado);
         }
 
-         void ajustarOpacidad() {
-            opacidad = (opacidad == 1.0f) ? 0.4f : 1.0f;
+        void ajustarOpacidad() 
+        {
+        opacidad = (opacidad == 1.0f) ? 0.4f : 1.0f;
         }
 
-        bool onClick(Vector2 punto) const {
-            Rectangle mouse = {
+        bool onClick(Vector2 punto) const 
+        {
+            Rectangle mouse = 
+            {
                 (float)punto.x,
                 (float)punto.y,
                 ANCHO_MOUSE,

@@ -11,16 +11,19 @@ int main() {
 
     Tablero tablero;
 
-    while (!WindowShouldClose()) {
+    while (!WindowShouldClose()) 
+    {
         BeginDrawing();
         ClearBackground(DARKGREEN); 
 
         tablero.dibujar();
 
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) 
+        {
             Vector2 mousePos = GetMousePosition();
             std::cout << "MOUSE :"<< mousePos.x << ", " << mousePos.y << std::endl;
             tablero.onClick(mousePos);
+
         }
 
         EndDrawing();
