@@ -25,9 +25,7 @@ class Personaje {
         {
             Color colorModificado = WHITE; 
             colorModificado.a = (unsigned char)(opacidad * 255); 
-
             float escalaAncho = rectangulo.width / textura.width;
-
             DrawTextureEx(textura, { rectangulo.x, rectangulo.y }, 0.0f, escalaAncho, colorModificado);
         }
 
@@ -45,8 +43,6 @@ class Personaje {
                 ANCHO_MOUSE,
                 ANCHO_MOUSE
             };
-            if(CheckCollisionRecs(mouse, this->rectangulo))
-                std::cout << "PJ :"<< this->rectangulo.x << ", " << this->rectangulo.y << std::endl;
             return CheckCollisionRecs(mouse, this->rectangulo);
         }
 

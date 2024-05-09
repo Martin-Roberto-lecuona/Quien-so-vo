@@ -5,6 +5,7 @@
       "includePath": [
         "${workspaceFolder}/**",
         "C:\\raylib\\raylib\\src",
+        "C:\\MinGW\\include",
         "C:\\raylib\\raylib\\src\\raylib.h"
       ],
       "defines": [
