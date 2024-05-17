@@ -4,6 +4,8 @@
 #include "input.cpp"
 #include "inicio.cpp"
 
+// run with run option (preLaunchTask). Do not compile yourself
+
 int main() {
     const int screenWidth = 1000;
     const int screenHeight = 900;
