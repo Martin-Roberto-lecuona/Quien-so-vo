@@ -11,10 +11,12 @@ class Tablero:
 
         ancho_celda = 150
         alto_celda = 250
-        imagen_ruta = "../img/Ricardo-Fort.png"
-
+        imagen_ruta_base = "../img/personaje_"
+        n_personaje = 0; 
         for i in range(FILAS):
             for j in range(COLUMNAS):
+                n_personaje+=1
+                imagen_ruta = imagen_ruta_base + str(n_personaje) + ".png"
                 pos_x = (j+1) * (ancho_celda+PADDING) - ancho_celda
                 pos_y = i*alto_celda
 
@@ -25,6 +27,7 @@ class Tablero:
                     alto_celda,
                     imagen_ruta
                 )
+
 
     def dibujar(self):
         for i in range(FILAS):

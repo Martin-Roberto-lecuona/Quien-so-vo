@@ -4,10 +4,8 @@ from input import InputField
 from tablero import Tablero
 
 def main():
-    SCREEN_WIDTH = 1000
+    SCREEN_WIDTH = 1200
     SCREEN_HEIGHT = 900
-    # IMAGEN_RUTA = "./img/fondo-inicio2.png"
-    ## corregir para que sea por ruta relativa
     IMAGEN_RUTA = "../img/fondo-inicio2.png"
     rl.init_window(SCREEN_WIDTH,SCREEN_HEIGHT,"Quien so vo?")
     rl.set_target_fps(60)
