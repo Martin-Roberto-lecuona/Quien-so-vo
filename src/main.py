@@ -45,7 +45,7 @@ def main():
         if input_field.overflow():
             input_field.dibujar_con_crlf(1.0)
         
-        rl.end_drawing
+        rl.end_drawing()
             
     rl.close_window()
 
