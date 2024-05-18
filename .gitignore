@@ -1,5 +1,5 @@
 *.exe
 *.dsym
-./src/__pycahce__
+./src/__pycache__
 ./.vscode/
 ./.venv
