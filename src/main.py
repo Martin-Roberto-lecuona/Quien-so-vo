@@ -3,16 +3,15 @@ from inicio import Inicio
 from input import InputField
 from tablero import Tablero
 
+
 def main():
-    SCREEN_WIDTH = 1000
+    SCREEN_WIDTH = 1200
     SCREEN_HEIGHT = 900
-    # IMAGEN_RUTA = "./img/fondo-inicio2.png"
-    ## corregir para que sea por ruta relativa
     IMAGEN_RUTA = "../img/fondo-inicio2.png"
-    rl.init_window(SCREEN_WIDTH,SCREEN_HEIGHT,"Quien so vo?")
+    rl.init_window(SCREEN_WIDTH, SCREEN_HEIGHT, "Quien so vo?")
     rl.set_target_fps(60)
 
-    inicio = Inicio(SCREEN_WIDTH,SCREEN_HEIGHT,IMAGEN_RUTA)
+    inicio = Inicio(SCREEN_WIDTH, SCREEN_HEIGHT, IMAGEN_RUTA)
 
     while inicio.get_visible() and not rl.window_should_close():
         rl.begin_drawing()
@@ -23,11 +22,11 @@ def main():
             mouse_pos = rl.get_mouse_position()
             print(f"Mouse : {mouse_pos.x} , {mouse_pos.y}")
             inicio.on_click(mouse_pos)
-        
+
         rl.end_drawing()
-    
+
     tablero = Tablero()
-    input_field = InputField(100,800,500,60)
+    input_field = InputField(100, 800, 500, 60)
 
     while not rl.window_should_close():
         rl.begin_drawing()
@@ -44,18 +43,11 @@ def main():
 
         if input_field.overflow():
             input_field.dibujar_con_crlf(1.0)
-        
+
         rl.end_drawing()
-            
+
     rl.close_window()
 
-    
-
-
-    
-
-    
-    
 
 if __name__ == "__main__":
     main()
