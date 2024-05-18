@@ -31,11 +31,11 @@ class InputField:
                 if self._text:
                     self._text=self._text[:-1]
                     self._tam_linea = self._tam_linea-1 if self._tam_linea>0 else 0
-                elif key == rl.KeyboardKey.KEY_ENTER:
-                    self.borrar_campo()
-                else:
-                    self._text += chr(key)
-                    self._tam_linea += 1
+            elif key == rl.KeyboardKey.KEY_ENTER:
+                self.borrar_campo()
+            else:
+                self._text += chr(key)
+                self._tam_linea += 1
             key = rl.get_key_pressed()
 
                     
