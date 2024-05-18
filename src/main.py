@@ -8,7 +8,7 @@ def main():
     SCREEN_HEIGHT = 900
     # IMAGEN_RUTA = "./img/fondo-inicio2.png"
     ## corregir para que sea por ruta relativa
-    IMAGEN_RUTA = "/home/pilum/Facultad/programacion-concurrente/Quien-so-vo-py/img/fondo-inicio2.png"
+    IMAGEN_RUTA = "../img/fondo-inicio2.png"
     rl.init_window(SCREEN_WIDTH,SCREEN_HEIGHT,"Quien so vo?")
     rl.set_target_fps(60)
 

@@ -3,28 +3,20 @@ from personaje import Personaje
 
 FILAS = 3
 COLUMNAS = 5
-PADDING = 15
+PADDING = 30
 
 class Tablero:
     def __init__(self) -> None:
-        self._personajes = [[None] * COLUMNAS for _ in range(FILAS)]
+        self._personajes = [[Personaje] * COLUMNAS for _ in range(FILAS)]
 
         ancho_celda = 150
         alto_celda = 250
-        imagen_ruta = "/home/pilum/Facultad/programacion-concurrente/Quien-so-vo-py/img/Ricardo-Fort.png"
+        imagen_ruta = "../img/Ricardo-Fort.png"
 
         for i in range(FILAS):
             for j in range(COLUMNAS):
                 pos_x = (j+1) * (ancho_celda+PADDING) - ancho_celda
                 pos_y = i*alto_celda
-
-                personaje = Personaje(
-                    pos_x,
-                    pos_y,
-                    ancho_celda,
-                    alto_celda,
-                    imagen_ruta
-                )
 
                 self._personajes[i][j] = Personaje(
                     pos_x,
