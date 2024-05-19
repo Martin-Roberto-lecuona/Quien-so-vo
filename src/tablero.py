@@ -1,5 +1,6 @@
 import pyray as rl
 from personaje import Personaje
+from utilities import *
 
 FILAS = 3
 COLUMNAS = 5
@@ -15,7 +16,8 @@ class Tablero:
 
         ancho_celda = 180
         alto_celda = 200
-        imagen_ruta_base = "../img/personaje_"
+        PATH_IMAGE = get_path_img()
+        imagen_ruta_base = add_path_file(PATH_IMAGE,"personaje_")
         n_personaje = 0
         for i in range(FILAS):
             for j in range(COLUMNAS):

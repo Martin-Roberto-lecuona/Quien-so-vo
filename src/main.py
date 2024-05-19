@@ -2,16 +2,19 @@ import pyray as rl
 from inicio import Inicio
 from input import InputField
 from tablero import Tablero
+from utilities import *
 
 
 def main():
     SCREEN_WIDTH = 1200
     SCREEN_HEIGHT = 900
-    IMAGEN_RUTA = "../img/fondo-inicio2.png"
+    PATH_IMAGE = get_path_img()
+    BACKGROUND_IMAGE = add_path_file(PATH_IMAGE,"fondo-inicio2.png")
+
     rl.init_window(SCREEN_WIDTH, SCREEN_HEIGHT, "Quien so vo?")
     rl.set_target_fps(60)
 
-    inicio = Inicio(SCREEN_WIDTH, SCREEN_HEIGHT, IMAGEN_RUTA)
+    inicio = Inicio(SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_IMAGE)
 
     while inicio.get_visible() and not rl.window_should_close():
         rl.begin_drawing()
@@ -30,7 +33,7 @@ def main():
 
     while not rl.window_should_close():
         rl.begin_drawing()
-        rl.clear_background(rl.DARKGREEN)
+        rl.clear_background(rl.BLUE)
         input_field.process_input()
 
         tablero.dibujar()
