@@ -23,7 +23,7 @@ class Personaje:
         color_modificado = rl.Color(255, 255, 255, 255)
         color_modificado.a = int(self._opacidad * 255)
         try:
-            borde_redondeado = 0.05  # Radio del borde redondeado
+            borde_redondeado = 0.05
             rl.draw_rectangle_rounded(self._rectangulo,
                                    borde_redondeado, 0, rl.WHITE)
             rl.draw_rectangle_rounded_lines(self._rectangulo,
