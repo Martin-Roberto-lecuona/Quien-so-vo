@@ -31,7 +31,8 @@ class Tablero:
     def dibujar(self, adivinando):
         for i in range(FILAS):
             for j in range(COLUMNAS):
-                self._personajes[i][j].dibujar(adivinando)
+                self._personajes[i][j].hover(adivinando)
+                self._personajes[i][j].dibujar()
 
     def on_click(self, mouse_pos):
         for i in range(FILAS):
@@ -40,12 +41,11 @@ class Tablero:
                     self._personajes[i][j].ajustar_opacidad()
     
     
-    def obtener_personaje(self,mouse_pos, adivinando) -> Personaje :
-        if adivinando:
-            for i in range(FILAS):
-                for j in range(COLUMNAS):
-                    if (self._personajes[i][j].on_click(mouse_pos)):
-                        return self._personajes[i][j]
+    def obtener_personaje(self,mouse_pos) -> Personaje :
+        for i in range(FILAS):
+            for j in range(COLUMNAS):
+                if (self._personajes[i][j].on_click(mouse_pos)):
+                    return self._personajes[i][j]
         
         return None
     
