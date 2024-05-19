@@ -9,13 +9,12 @@ PADDING = 30
 class Tablero:
 
     def __init__(self) -> None:
-        # self._personajes = [[Personaje] * COLUMNAS for _ in range(FILAS)]
         self._personajes = [[None for _ in range(COLUMNAS)]
                             for _ in range(FILAS)]
 
         ancho_celda = 180
         alto_celda = 200
-        imagen_ruta_base = "../img/personaje_"
+        imagen_ruta_base = "img/personaje_"
         n_personaje = 0
         for i in range(FILAS):
             for j in range(COLUMNAS):
@@ -37,3 +36,23 @@ class Tablero:
             for j in range(COLUMNAS):
                 if (self._personajes[i][j].on_click(mouse_pos)):
                     self._personajes[i][j].ajustar_opacidad()
+    
+    def obtener_personaje(self,mouse_pos) -> Personaje :
+        for i in range(FILAS):
+            for j in range(COLUMNAS):
+                if (self._personajes[i][j].on_click(mouse_pos)):
+                    return self._personajes[i][j]
+        
+        return None
+    
+        
+
+    def elegir_personaje(self, mouse_pos):
+        # mouse_pos = rl.get_mouse_position()
+        # if rl.is_mouse_button_pressed():
+        for i in range(FILAS):
+            for j in range(COLUMNAS):
+                if (self._personajes[i][j].on_click(mouse_pos)):
+                    self._personajes[i][j].dibujar_dado_pos(mouse_pos)
+                    # return self._personajes[i][j]
+        
