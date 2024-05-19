@@ -3,7 +3,7 @@ from inicio import Inicio
 from input import InputField
 from tablero import Tablero
 from utilities import *
-
+from chatHistory import ChatHistory
 
 def main():
     SCREEN_WIDTH = 1200
