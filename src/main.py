@@ -1,19 +1,25 @@
 import pyray as rl
+from screeninfo import get_monitors
 from inicio import Inicio
 from input import InputField
 from tablero import Tablero
 
 
 def main():
-    SCREEN_WIDTH = 800
-    SCREEN_HEIGHT = 600
-    
-    rl.init_window(SCREEN_WIDTH, SCREEN_HEIGHT, "Quien so vo?")
+    window_width = 800
+    window_height = 600
+
+    monitor = get_monitors()[0]
+    SCREEN_WIDTH = monitor.width
+    SCREEN_HEIGHT = monitor.height
+
+    window_width = int(SCREEN_WIDTH * 0.75)
+    window_height = int(SCREEN_HEIGHT * 0.75)
+
+    rl.init_window(window_width, window_height, "Quien so vo?")
 
     SCREEN_WIDTH = rl.get_screen_width()
     SCREEN_HEIGHT = rl.get_screen_height()
-
-    rl.set_window_size(SCREEN_WIDTH, SCREEN_HEIGHT)
 
     rl.set_window_title("Quien so vo?")
 
@@ -21,7 +27,7 @@ def main():
 
     IMAGEN_RUTA = "../img/fondo-inicio2.png"
 
-    inicio = Inicio(SCREEN_WIDTH, SCREEN_HEIGHT, IMAGEN_RUTA)
+    inicio = Inicio(window_width, window_height, IMAGEN_RUTA)
 
     while inicio.get_visible() and not rl.window_should_close():
         rl.begin_drawing()
@@ -35,9 +41,9 @@ def main():
 
         rl.end_drawing()
 
-    tablero = Tablero(SCREEN_WIDTH,SCREEN_HEIGHT)
+    tablero = Tablero(window_width,window_height)
     #input_field = InputField(100, 800, 500, 60)
-    input_field = InputField(100, SCREEN_HEIGHT - 125, 500, 60)
+    input_field = InputField(100, window_height - 125, 500, 60)
 
     while not rl.window_should_close():
         rl.begin_drawing()

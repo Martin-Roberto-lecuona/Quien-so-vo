@@ -13,8 +13,8 @@ class Tablero():
         self._personajes = [[None for _ in range(COLUMNAS)]
                             for _ in range(FILAS)]
 
-        ancho_celda = screen_width - 700
-        alto_celda = screen_height - 500
+        ancho_celda = int(screen_width * 0.1)
+        alto_celda = int(screen_height * 0.2)
         imagen_ruta_base = "../img/personaje_"
         n_personaje = 0
         for i in range(FILAS):
