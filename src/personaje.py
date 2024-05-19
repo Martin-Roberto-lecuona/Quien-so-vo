@@ -28,20 +28,24 @@ class Personaje:
         grosor_borde = 2.5
         tam_texto = 20 
 
-        rl.draw_rectangle_rounded(self._rectangulo,
-                                   borde_redondeado, 0, rl.WHITE)
-        rl.draw_texture_ex(self._textura,
-                            (self._rectangulo.x, self._rectangulo.y), 0.0,
-                            1, color_modificado)
+        try: 
+            rl.draw_rectangle_rounded(self._rectangulo,
+                                    borde_redondeado, 0, rl.WHITE)
+            rl.draw_texture_ex(self._textura,
+                                (self._rectangulo.x, self._rectangulo.y), 0.0,
+                                1, color_modificado)
 
-        nombre_x = self._rectangulo.x + self._rectangulo.width // 2 - rl.measure_text(self._nombre, tam_texto) // 2
-        nombre_y = self._rectangulo.y + self._rectangulo.height + 5 
-        rl.draw_text(self._nombre, int(nombre_x), int(nombre_y), tam_texto, rl.WHITE)
+            nombre_x = self._rectangulo.x + self._rectangulo.width // 2 - rl.measure_text(self._nombre, tam_texto) // 2
+            nombre_y = self._rectangulo.y + self._rectangulo.height + 5 
+            rl.draw_text(self._nombre, int(nombre_x), int(nombre_y), tam_texto, rl.WHITE)
 
-        if rl.check_collision_point_rec(rl.get_mouse_position(),self._rectangulo):
-            rl.draw_rectangle_rounded_lines(self._rectangulo,borde_redondeado,0,grosor_borde+1,rl.YELLOW)
-        else :
-            rl.draw_rectangle_rounded_lines(self._rectangulo,borde_redondeado,0,grosor_borde,rl.BLACK)
+            if rl.check_collision_point_rec(rl.get_mouse_position(),self._rectangulo):
+                rl.draw_rectangle_rounded_lines(self._rectangulo,borde_redondeado,0,grosor_borde+1,rl.YELLOW)
+            else :
+                rl.draw_rectangle_rounded_lines(self._rectangulo,borde_redondeado,0,grosor_borde,rl.BLACK)
+        except ZeroDivisionError:
+            print("ERROR DE TEXTURA")
+            exit()
 
 
     def ajustar_opacidad(self):

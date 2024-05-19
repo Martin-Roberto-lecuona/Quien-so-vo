@@ -51,7 +51,6 @@ def dibujar_ventana_juego():
     while not rl.window_should_close():
         rl.begin_drawing()
         rl.clear_background(rl.BLUE)
-        rl.clear_background(rl.BLUE)
         input_field.process_input()
 
         tablero.dibujar()
