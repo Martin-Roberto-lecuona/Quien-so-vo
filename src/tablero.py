@@ -16,7 +16,7 @@ class Tablero:
 
         ancho_celda = 180
         alto_celda = 200
-        imagen_ruta_base = "img/personaje_"
+        imagen_ruta_base = "../img/personaje_"
         n_personaje = 0
         for i in range(FILAS):
             for j in range(COLUMNAS):

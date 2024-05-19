@@ -6,7 +6,7 @@ import pyray as rl
 class Personaje:
 
     def __init__(self, x, y, ancho, alto, imagen_ruta, opacidad=1.0):
-        self._nombre = imagen_ruta[imagen_ruta.rfind('/')+1:imagen_ruta.find('.')]
+        self._nombre = "crear diccionario"
         self._imagen_ruta = imagen_ruta
         image = rl.load_image(imagen_ruta)
         rl.image_resize(image, ancho, alto)
@@ -15,6 +15,7 @@ class Personaje:
 
         if self._textura.id == 0:
             rl.trace_log(4, f"Failed to load texture from {imagen_ruta}")
+            exit(-1)
 
         self._rectangulo = rl.Rectangle(x, y, ancho, alto)
 
