@@ -48,12 +48,10 @@ class Tablero:
     
         
 
-    def elegir_personaje(self, mouse_pos):
-        # mouse_pos = rl.get_mouse_position()
-        # if rl.is_mouse_button_pressed():
-        for i in range(FILAS):
-            for j in range(COLUMNAS):
-                if (self._personajes[i][j].on_click(mouse_pos)):
-                    self._personajes[i][j].dibujar_dado_pos(mouse_pos)
-                    # return self._personajes[i][j]
+    # def elegir_personaje(self, mouse_pos):
+    #     for i in range(FILAS):
+    #         for j in range(COLUMNAS):
+    #             if (self._personajes[i][j].on_click(mouse_pos)):
+    #                 self._personajes[i][j].dibujar_dado_pos(mouse_pos)
+    #                 # return self._personajes[i][j]
         

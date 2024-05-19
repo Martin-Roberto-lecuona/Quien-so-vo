@@ -11,11 +11,11 @@ from adivinar import botonAdivinar
 
 SCREEN_WIDTH = 1500
 SCREEN_HEIGHT = 900
-IMAGEN_RUTA = "img/fondo-inicio2.png"
+# IMAGEN_RUTA = "img/fondo-inicio2.png"
 
 def main():
-    print(rl.get_screen_width())
-    print(rl.get_screen_height())
+    # print(rl.get_screen_width())
+    # print(rl.get_screen_height())
 
     configuracion_inicial()
 
@@ -60,7 +60,8 @@ def dibujar_ventana_juego():
         boton_adivinar.dibujar()
 
 
-        rl.draw_text(f"{rl.get_screen_width()}, {rl.get_screen_height()} fps: {rl.get_fps()}",0,0,30,rl.WHITE)
+        # rl.draw_text(f"{rl.get_screen_width()}, {rl.get_screen_height()} fps: {rl.get_fps()}",0,0,30,rl.WHITE)
+        rl.draw_text(f"actual: {rl.get_screen_width()}, {rl.get_screen_height()} base: {SCREEN_WIDTH}, {SCREEN_HEIGHT} fps: {rl.get_fps()}",0,0,30,rl.WHITE)
 
         if rl.is_mouse_button_pressed(rl.MouseButton.MOUSE_BUTTON_LEFT) and elegido_personaje_a_adivinar == False:
             mouse_pos = rl.get_mouse_position()
@@ -97,12 +98,15 @@ def dibujar_ventana_juego():
         rl.end_drawing()
 
 def dibujar_ventana_inicio():
-    inicio = Inicio(SCREEN_WIDTH, SCREEN_HEIGHT, IMAGEN_RUTA)
+    PATH_IMAGE = get_path_img()
+    BACKGROUND_IMAGE = add_path_file(PATH_IMAGE,"fondo-inicio2.png")
+
+    inicio = Inicio(SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_IMAGE)
     while inicio.get_visible() and not rl.window_should_close():
         rl.begin_drawing()
         rl.clear_background(rl.DARKGREEN)
         inicio.dibujar()
-        rl.draw_text(f"{rl.get_screen_width()}, {rl.get_screen_height()} fps: {rl.get_fps()}",0,0,30,rl.WHITE)
+        rl.draw_text(f"actual: {rl.get_screen_width()}, {rl.get_screen_height()} base: {SCREEN_WIDTH}, {SCREEN_HEIGHT} fps: {rl.get_fps()}",0,0,30,rl.WHITE)
 
         if rl.is_mouse_button_pressed(rl.MouseButton.MOUSE_BUTTON_LEFT):
             mouse_pos = rl.get_mouse_position()
