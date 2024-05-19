@@ -21,13 +21,9 @@ class Personaje:
     def dibujar(self):
         color_modificado = rl.Color(255, 255, 255, 255)
         color_modificado.a = int(self._opacidad * 255)
-        try:
-            rl.draw_texture_ex(self._textura,
-                               (self._rectangulo.x, self._rectangulo.y), 0.0,
-                               1, color_modificado)
-        except ZeroDivisionError:
-            print("ERROR DE TEXTURA")
-            exit()
+        rl.draw_texture_ex(self._textura,
+                            (self._rectangulo.x, self._rectangulo.y), 0.0,
+                            1, color_modificado)
 
     def ajustar_opacidad(self):
         self._opacidad = 0.4 if self._opacidad == 1.0 else 1.0
