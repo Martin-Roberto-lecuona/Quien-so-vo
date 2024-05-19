@@ -2,6 +2,7 @@ import pyray as rl
 from inicio import Inicio
 from input import InputField
 from tablero import Tablero
+from utilities import *
 from chatHistory import ChatHistory
 from miPersonaje import MiPersonaje
 from adivinar import botonAdivinar
@@ -49,6 +50,7 @@ def dibujar_ventana_juego():
 
     while not rl.window_should_close():
         rl.begin_drawing()
+        rl.clear_background(rl.BLUE)
         rl.clear_background(rl.BLUE)
         input_field.process_input()
 

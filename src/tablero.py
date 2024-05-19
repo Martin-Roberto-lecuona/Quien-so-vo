@@ -1,5 +1,6 @@
 import pyray as rl
 from personaje import Personaje
+from utilities import *
 
 FILAS = 3
 COLUMNAS = 5
