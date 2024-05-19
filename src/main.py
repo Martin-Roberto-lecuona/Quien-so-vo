@@ -5,11 +5,21 @@ from tablero import Tablero
 
 
 def main():
-    SCREEN_WIDTH = 1200
-    SCREEN_HEIGHT = 900
-    IMAGEN_RUTA = "../img/fondo-inicio2.png"
+    SCREEN_WIDTH = 800
+    SCREEN_HEIGHT = 600
+    
     rl.init_window(SCREEN_WIDTH, SCREEN_HEIGHT, "Quien so vo?")
+
+    SCREEN_WIDTH = rl.get_screen_width()
+    SCREEN_HEIGHT = rl.get_screen_height()
+
+    rl.set_window_size(SCREEN_WIDTH, SCREEN_HEIGHT)
+
+    rl.set_window_title("Quien so vo?")
+
     rl.set_target_fps(60)
+
+    IMAGEN_RUTA = "../img/fondo-inicio2.png"
 
     inicio = Inicio(SCREEN_WIDTH, SCREEN_HEIGHT, IMAGEN_RUTA)
 
@@ -25,8 +35,9 @@ def main():
 
         rl.end_drawing()
 
-    tablero = Tablero()
-    input_field = InputField(100, 800, 500, 60)
+    tablero = Tablero(SCREEN_WIDTH,SCREEN_HEIGHT)
+    #input_field = InputField(100, 800, 500, 60)
+    input_field = InputField(100, SCREEN_HEIGHT - 125, 500, 60)
 
     while not rl.window_should_close():
         rl.begin_drawing()

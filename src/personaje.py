@@ -38,4 +38,8 @@ class Personaje:
         return rl.check_collision_recs(mouse, self._rectangulo)
 
     def __del__(self):
-        rl.unload_texture(self._textura)
+        #rl.unload_texture(self._textura)
+        if hasattr(self, '_textura'):
+            rl.unload_texture(self._textura)
+        else:
+            print("No se pudo descargar la textura: _textura no está presente en la instancia de Personaje.")

@@ -6,15 +6,15 @@ COLUMNAS = 5
 PADDING = 30
 
 
-class Tablero:
+class Tablero():
 
-    def __init__(self) -> None:
-        # self._personajes = [[Personaje] * COLUMNAS for _ in range(FILAS)]
+    def __init__(self,screen_width, screen_height) -> None:
+            # self._personajes = [[Personaje] * COLUMNAS for _ in range(FILAS)]
         self._personajes = [[None for _ in range(COLUMNAS)]
                             for _ in range(FILAS)]
 
-        ancho_celda = 180
-        alto_celda = 200
+        ancho_celda = screen_width - 700
+        alto_celda = screen_height - 500
         imagen_ruta_base = "../img/personaje_"
         n_personaje = 0
         for i in range(FILAS):
@@ -36,4 +36,4 @@ class Tablero:
         for i in range(FILAS):
             for j in range(COLUMNAS):
                 if (self._personajes[i][j].on_click(mouse_pos)):
-                    self._personajes[i][j].ajustar_opacidad()
+                    self._personajes[i][j].ajustar_opacidad
