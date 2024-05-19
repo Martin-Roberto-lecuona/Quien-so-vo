@@ -1,3 +1,14 @@
+# Ignorar archivos ejecutables
 *.exe
+
+# Ignorar archivos de depuración
 *.dsym
-main
+
+# Ignorar __pycache__ en cualquier lugar del proyecto
+__pycache__/
+
+# Ignorar la configuración de Visual Studio Code
+.vscode/
+
+# Ignorar entornos virtuales de Python
+.venv/

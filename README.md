@@ -1,2 +1,2 @@
-# Quien so vo?
-<br/> juego argentino de preguntas para saber que personaje de fama popular argentina te ha tocado
+# quien so vo
+Juego argentino de quien es quien version online. Para que te diviertas con tus amigos adivinando que personaje argentino son.
