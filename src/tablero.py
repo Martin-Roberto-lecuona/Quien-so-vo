@@ -36,4 +36,4 @@ class Tablero():
         for i in range(FILAS):
             for j in range(COLUMNAS):
                 if (self._personajes[i][j].on_click(mouse_pos)):
-                    self._personajes[i][j].ajustar_opacidad
+                    self._personajes[i][j].ajustar_opacidad()
