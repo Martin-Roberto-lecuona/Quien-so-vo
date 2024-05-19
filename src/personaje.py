@@ -21,7 +21,7 @@ class Personaje:
 
         self._opacidad = opacidad
 
-    def dibujar(self):
+    def dibujar(self, adivinando):
         color_modificado = rl.Color(255, 255, 255, 255)
         color_modificado.a = int(self._opacidad * 255)
         borde_redondeado = 0.05
@@ -40,7 +40,11 @@ class Personaje:
             rl.draw_text(self._nombre, int(nombre_x), int(nombre_y), tam_texto, rl.WHITE)
 
             if rl.check_collision_point_rec(rl.get_mouse_position(),self._rectangulo):
-                rl.draw_rectangle_rounded_lines(self._rectangulo,borde_redondeado,0,grosor_borde+1,rl.YELLOW)
+                if adivinando:
+                    rl.draw_rectangle_rounded_lines(self._rectangulo,borde_redondeado,0,grosor_borde+1,rl.RED)
+                else:
+                    rl.draw_rectangle_rounded_lines(self._rectangulo,borde_redondeado,0,grosor_borde+1,rl.YELLOW)
+
             else :
                 rl.draw_rectangle_rounded_lines(self._rectangulo,borde_redondeado,0,grosor_borde,rl.BLACK)
         except ZeroDivisionError:

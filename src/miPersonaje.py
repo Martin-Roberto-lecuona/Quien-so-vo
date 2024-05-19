@@ -43,13 +43,15 @@ class MiPersonaje:
         
 
     def elegir_personaje(self, personaje):  
-        rl.unload_texture(self._textura)
-        image = rl.load_image(personaje._imagen_ruta)
-        rl.image_resize(image, 150, 150)
-        self._textura = rl.load_texture_from_image(image)
-        rl.unload_image(image)
-        self._nombre = personaje._nombre
-        self._personaje_elegido = True
+        if not self.personaje_elegido():
+            rl.unload_texture(self._textura)
+            image = rl.load_image(personaje._imagen_ruta)
+            rl.image_resize(image, 150, 150)
+            self._textura = rl.load_texture_from_image(image)
+            rl.unload_image(image)
+            self._nombre = personaje._nombre
+            self._personaje_elegido = True
+    
 
     def __del__(self):
         rl.unload_texture(self._textura)

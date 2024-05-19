@@ -1,6 +1,7 @@
 import pyray as rl
 from personaje import Personaje
 from utilities import *
+import random
 
 FILAS = 3
 COLUMNAS = 5
@@ -27,10 +28,10 @@ class Tablero:
                 self._personajes[i][j] = Personaje(pos_x, pos_y, ancho_celda,
                                                    alto_celda, imagen_ruta)
 
-    def dibujar(self):
+    def dibujar(self, adivinando):
         for i in range(FILAS):
             for j in range(COLUMNAS):
-                self._personajes[i][j].dibujar()
+                self._personajes[i][j].dibujar(adivinando)
 
     def on_click(self, mouse_pos):
         for i in range(FILAS):
@@ -38,20 +39,19 @@ class Tablero:
                 if (self._personajes[i][j].on_click(mouse_pos)):
                     self._personajes[i][j].ajustar_opacidad()
     
-    def obtener_personaje(self,mouse_pos) -> Personaje :
-        for i in range(FILAS):
-            for j in range(COLUMNAS):
-                if (self._personajes[i][j].on_click(mouse_pos)):
-                    return self._personajes[i][j]
+    
+    def obtener_personaje(self,mouse_pos, adivinando) -> Personaje :
+        if adivinando:
+            for i in range(FILAS):
+                for j in range(COLUMNAS):
+                    if (self._personajes[i][j].on_click(mouse_pos)):
+                        return self._personajes[i][j]
         
         return None
     
-        
+    def obtener_personaje_aleatorio(self) -> Personaje:
+        fila_aleatoria = random.randint(0,FILAS-1)
+        columna_aleatoria = random.randint(0,COLUMNAS-1)
 
-    # def elegir_personaje(self, mouse_pos):
-    #     for i in range(FILAS):
-    #         for j in range(COLUMNAS):
-    #             if (self._personajes[i][j].on_click(mouse_pos)):
-    #                 self._personajes[i][j].dibujar_dado_pos(mouse_pos)
-    #                 # return self._personajes[i][j]
-        
+        return self._personajes[fila_aleatoria][columna_aleatoria]
+    

@@ -1,9 +1,9 @@
 import pyray as rl
 
-class botonAdivinar:
+class BotonAdivinar:
     def __init__(self,x,y,ancho,alto) -> None:
         self._rectangulo = rl.Rectangle(x,y,ancho,alto)
-        self._presionado = False
+        self._estado = False
         self._color = rl.PURPLE
 
     def dibujar(self):
@@ -14,14 +14,17 @@ class botonAdivinar:
         rl.draw_text(texto,int(self._rectangulo.x + self._rectangulo.width/2 - (measure.x/2)),int(self._rectangulo.y + self._rectangulo.height/2 - (measure.y/2)),20,rl.BLACK)
         
     def on_click(self,punto) -> bool:
-        return rl.check_collision_point_rec(punto,self._rectangulo)
+        if rl.check_collision_point_rec(punto,self._rectangulo):
+            return self.cambiar_estado()
+        
+        return self._estado
     
-    def activar_boton(self) -> bool:
-        if self._presionado == False:
-            self._presionado = True
-            self._color = rl.RED
-            return True
-        elif self._presionado==True:
-            self._presionado =False
+    def cambiar_estado(self) -> bool:
+        if not self._estado:
+            self._estado = not self._estado
+            self._color=rl.RED
+            return self._estado
+        else:
+            self._estado=not self._estado
             self._color = rl.PURPLE
-            return False
+            return self._estado
