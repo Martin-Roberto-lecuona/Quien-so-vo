@@ -42,10 +42,9 @@ def dibujar_ventana_juego():
     chat_history = ChatHistory(rl.get_screen_width()-(ANCHO_TABLERO + rl.get_screen_width()/30), 30, ANCHO_TABLERO, ALTO_TABLERO)
     input_field = InputField(100, 800, ANCHO_INPUT_FIELD, ALTO_INPUT_FIELD,chat_history)
     mi_personaje = MiPersonaje(1172,700,150,150, add_path_file("personaje_desconocido.png"))
-    boton_adivinar = BotonAdivinar(800,770,150,100)
+    boton_adivinar = BotonAdivinar(rl.Rectangle(800,770,150,100), rl.PURPLE, "adivinar",20)
 
-    # boton_adivinar_activado = False
-    # elegido_personaje_a_adivinar = False
+
     boton_adivinar_presionado = False
     terminar_juego = False
 

@@ -1,7 +1,6 @@
 import pyray as rl
-import sys
-
-ANCHO_MOUSE = 0.5
+from boton import Boton
+from constants import game_name  
 
 
 class Inicio:
@@ -16,65 +15,43 @@ class Inicio:
         print("Imagen Ruta: " + imagen_ruta)
 
         self._fondo = rl.Rectangle(0, 0, ancho, alto)
+        self._rectangulo_titulo = rl.Rectangle(((ancho-(ancho/2))/2),((alto-(alto/6))/20),(ancho/2),(alto/4))
+        rectangulo_iniciar_partida = rl.Rectangle((ancho / 4) - 10, alto / 3, ancho / 4, alto / 6)
+        rectangulo_unirse_partida = rl.Rectangle((ancho / 2) + 10, alto / 3, ancho / 4, alto / 6)
 
-        self._titulo = rl.Rectangle(((ancho-(ancho/2))/2),((alto-(alto/6))/20),(ancho/2),(alto/4))
-
-        self._crear_partida = rl.Rectangle((ancho / 4) - 10, alto / 3,
-                                           ancho / 4, alto / 6)
-
-        self._unirse_partida = rl.Rectangle((ancho / 2) + 10, alto / 3,
-                                            ancho / 4, alto / 6)
+        self._tam_titulo = 70
+        self._medida_titulo = rl.measure_text_ex(rl.get_font_default(),game_name,self._tam_titulo,0.0)
+        self._boton_iniciar_partida = Boton(rectangulo_iniciar_partida,rl.BLUE,"iniciar partida",40)
+        self._boton_unirse_partida = Boton(rectangulo_unirse_partida,rl.RED,"unirse a partida",40)
         self._visible = 1
 
     def dibujar(self):
         try:
             self.dibujar_fondo()
-
             self.dibujar_titulo()
+            self._boton_iniciar_partida.dibujar()
+            self._boton_unirse_partida.dibujar()
 
-            self.dibujar_boton_iniciar_partida()
-
-            self.dibujar_boton_unirse_a_partida()
         except ZeroDivisionError:
             print("ERROR DE TEXTURA")
             exit()
 
 
     def dibujar_titulo(self):
-        TAM_FONT_TITULO = 70
-        rl.draw_rectangle_rec(self._titulo,rl.YELLOW)
-        texto_titulo = "Quien so vo?"
-        tt_measure = rl.measure_text_ex(rl.get_font_default(),texto_titulo,TAM_FONT_TITULO,0.0)
-        rl.draw_text(texto_titulo, int(self._titulo.x + self._titulo.width/2 - (tt_measure.x/2)),
-                         int(self._titulo.y+self._titulo.height/2-(tt_measure.y/2)),TAM_FONT_TITULO,rl.BLACK)
+        rl.draw_rectangle_rec(self._rectangulo_titulo,rl.YELLOW)
+        rl.draw_text(game_name, int(self._rectangulo_titulo.x + self._rectangulo_titulo.width/2 - (self._medida_titulo.x/2)),
+                         int(self._rectangulo_titulo.y+self._rectangulo_titulo.height/2-(self._medida_titulo.y/2)),self._tam_titulo,rl.BLACK)
 
     def dibujar_fondo(self):
         escala_ancho = self._fondo.width / self._textura.width
         rl.draw_texture_ex(self._textura, (self._fondo.x, self._fondo.y),
                                0.0, escala_ancho, rl.WHITE)
 
-    def dibujar_boton_unirse_a_partida(self):
-        TAM_FONT_UAP=40
-        text_unirse_partida = "Unirse a Partida"
-        tup_measure = rl.measure_text_ex(rl.get_font_default(),text_unirse_partida,TAM_FONT_UAP,0.0)
-        rl.draw_rectangle_rec(self._unirse_partida, rl.BLUE)
-        rl.draw_text(text_unirse_partida, int(self._unirse_partida.x + self._unirse_partida.width/2 - (tup_measure.x/2)),
-                         int(self._unirse_partida.y + self._unirse_partida.height/2 - (tup_measure.y/2)), TAM_FONT_UAP, rl.WHITE)
-
-    def dibujar_boton_iniciar_partida(self):
-        TAM_FONT_IAP=40
-        rl.draw_rectangle_rec(self._crear_partida, rl.RED)
-        text_crear_partida = "Crear Partida"
-        tcp_measure = rl.measure_text_ex(rl.get_font_default(),text_crear_partida,TAM_FONT_IAP,0.0)
-        rl.draw_text(text_crear_partida, int(self._crear_partida.x + self._crear_partida.width/2 - (tcp_measure.x/2)),
-                         int(self._crear_partida.y + self._crear_partida.height/2 - (tcp_measure.y/2)), TAM_FONT_IAP, rl.WHITE)
-
     def on_click(self, punto) -> bool:
-
-        if rl.check_collision_point_rec(punto,self._crear_partida):
+        if self._boton_iniciar_partida.on_click(punto):
             print("Ejecutar Servidor")
             self._visible = 0
-        elif rl.check_collision_point_rec(punto,self._unirse_partida):
+        elif self._boton_unirse_partida.on_click(punto):
             print("Ejecutar Cliente")
             self._visible = 0
 
