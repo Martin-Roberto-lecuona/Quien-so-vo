@@ -9,13 +9,19 @@ from miPersonaje import MiPersonaje
 from botonAdivinar import BotonAdivinar
 from constants import game_name  
 import socket
+from screeninfo import get_monitors
+
 
 el_socket   = None
 creador     = None
 
+monitor = get_monitors()[0]
+SCREEN_WIDTH = int(monitor.width * 0.85)
+SCREEN_HEIGHT= int(monitor.height * 0.85)
 
-SCREEN_WIDTH    = 1500
-SCREEN_HEIGHT   = 900
+
+# SCREEN_WIDTH    = 1500
+# SCREEN_HEIGHT   = 900
 
 def main():
     configuracion_inicial()
