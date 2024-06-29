@@ -89,7 +89,8 @@ class Inicio:
             self._creador = True
             self._visible = 0
         elif rl.check_collision_point_rec(punto,self._unirse_partida):
-            self._socket  = self.unirse_partida()
+            codigo = input("Ingresar codigo: ")
+            self._socket  = self.unirse_partida(codigo)
             self._creador = False
             self._visible = 0
 
@@ -156,6 +157,8 @@ class Inicio:
         # Obtiene la IP y el puerto del URL de ngrok
         
         url_ngrok = self.get_text_api(code)
+        url_ngrok = url_ngrok["text"]
+        print(f"\n\nURL NEGROK: {url_ngrok}\n\n")
         
         url_ngrok = self.descifrar_datos(url_ngrok)
         _, direccion = url_ngrok.split("//")
