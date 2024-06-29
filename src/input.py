@@ -31,6 +31,7 @@ class InputField:
                     self._text = self._text[:-1]
                     self._tam_linea = self._tam_linea - 1 if self._tam_linea > 0 else 0
             elif key == rl.KeyboardKey.KEY_ENTER:
+                print("\n\n\nse ha escrito en el chat de texto\n\n\n")
                 self.send_text()
             else:
                 self._text += chr(key)
