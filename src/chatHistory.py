@@ -58,6 +58,7 @@ class ChatHistory:
         self._socket.sendall(mensaje.encode())
         # crear hilo de recibir
         self._mi_turno = False
+        print(f"\n\n\n finaliza recive_data_input se envia {mensaje.encode()}\n\n ")
         
         
     def recive_data_socket(self):

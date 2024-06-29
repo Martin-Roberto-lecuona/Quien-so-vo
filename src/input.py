@@ -31,7 +31,7 @@ class InputField:
                     self._text = self._text[:-1]
                     self._tam_linea = self._tam_linea - 1 if self._tam_linea > 0 else 0
             elif key == rl.KeyboardKey.KEY_ENTER:
-                print("\n\n\nse ha escrito en el chat de texto\n\n\n")
+                print(f"\n\n\nse ha escrito en el chat de texto: {self._text}\n\n\n")
                 self.send_text()
             else:
                 self._text += chr(key)
@@ -64,6 +64,8 @@ class InputField:
         self._cant_lineas = 0
 
     def send_text(self):
+        print(self._chat_history.es_mi_turno())
+        print(self._text)
         if (self._chat_history.es_mi_turno()):
-            self._chat_history.recive_data_socket()
+            self._chat_history.recive_data_input(self._text)
             self.borrar_campo()
