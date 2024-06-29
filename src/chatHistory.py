@@ -14,6 +14,19 @@ PADDING_Y = 8
 MAX_LINEAS = 3
 
 class ChatHistory:
+    def manejar_conexion(self,conn):
+        while True:
+            if self._mi_turno:
+                mensaje = self._text
+                conn.sendall(mensaje.encode())
+                self._mi_turno = False
+            else:
+                datos = conn.recv(1024)
+                if not datos:
+                    break
+                print(f"Turno del oponente: {datos.decode()}")
+                self._mi_turno = True
+
 
     def __init__(self, x, y, ancho, alto, text="Historial : \n", el_socket: Any = None , creador: Any = None) -> None:
         self._campo = rl.Rectangle(x, y, ancho, alto)
@@ -23,8 +36,8 @@ class ChatHistory:
         self._tam_linea = 0
         self._cant_lineas = 0
         self._mi_turno = creador
-        # self._hilo_lectura = threading.Thread(target=self.manejar_conexion, args=(self._socket,))
-        # self._hilo_lectura.start()
+        self._hilo_lectura = threading.Thread(target=self.manejar_conexion, args=(self._socket,))
+        self._hilo_lectura.start()
         self._socket = el_socket
 
     def __del__(self):
@@ -65,15 +78,3 @@ class ChatHistory:
         print(f"Turno del oponente: {datos.decode()}")
         self._mi_turno = True
     
-    def manejar_conexion(self,conn):
-        while True:
-            if self._mi_turno:
-                mensaje = self._text
-                self._socket.sendall(mensaje.encode())
-                # self._mi_turno = False
-            else:
-                datos = self._socket.recv(1024)
-                if not datos:
-                    break
-                print(f"Turno del oponente: {datos.decode()}")
-                self._mi_turno = True
