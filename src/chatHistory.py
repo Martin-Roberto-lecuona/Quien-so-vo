@@ -36,9 +36,9 @@ class ChatHistory:
         self._tam_linea = 0
         self._cant_lineas = 0
         self._mi_turno = creador
+        self._socket = el_socket
         self._hilo_lectura = threading.Thread(target=self.manejar_conexion, args=(self._socket,))
         self._hilo_lectura.start()
-        self._socket = el_socket
 
     def __del__(self):
         self._hilo_lectura.join()
