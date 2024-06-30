@@ -125,7 +125,7 @@ class Inicio:
             print("Error al agregar el texto:", response.status_code, response.json())
             exit(-1)
 
-    def crear_partida(self):
+    def crear_partida(self) -> socket:
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.bind(("0.0.0.0", 0))  # Bind a cualquier puerto disponible
         server_socket.listen(1)
@@ -140,6 +140,7 @@ class Inicio:
 
         conn, addr = server_socket.accept()
         print(f"Conectado con {addr}")
+        print(f"socket: {conn}")
 
         return conn
     

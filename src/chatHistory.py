@@ -40,6 +40,7 @@ class ChatHistory:
         self._cant_lineas = 0
         self._mi_turno = creador
         self._socket = el_socket
+        print(f"socket en chat history {self._socket}")
         self._hilo_lectura = threading.Thread(target=self.manejar_conexion, args=(self._socket,))
         self._hilo_lectura.start()
 

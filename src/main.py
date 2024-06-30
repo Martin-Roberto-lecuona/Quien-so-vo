@@ -49,7 +49,7 @@ def dibujar_ventana_juego():
     ALTO_INPUT_FIELD = 60
 
     tablero = Tablero()
-    chat_history = ChatHistory(rl.get_screen_width()-(ANCHO_TABLERO + rl.get_screen_width()/30), 30, ANCHO_TABLERO, ALTO_TABLERO, el_socket, creador)
+    chat_history = ChatHistory(rl.get_screen_width()-(ANCHO_TABLERO + rl.get_screen_width()/30), 30, ANCHO_TABLERO, ALTO_TABLERO, el_socket=el_socket, creador=creador)
     input_field = InputField(100, 800, ANCHO_INPUT_FIELD, ALTO_INPUT_FIELD,chat_history)
     mi_personaje = MiPersonaje(1172,700,150,150, add_path_file("personaje_desconocido.png"))
     boton_adivinar = BotonAdivinar(800,770,150,100)
@@ -91,6 +91,8 @@ def dibujar_ventana_juego():
         rl.end_drawing()
 
 def dibujar_ventana_inicio():
+    global creador
+    global el_socket
     BACKGROUND_IMAGE = add_path_file("fondo-inicio2.png")
 
     inicio = Inicio(SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_IMAGE)
@@ -107,6 +109,8 @@ def dibujar_ventana_inicio():
 
         rl.end_drawing()
     el_socket,creador = inicio.get_socket()
+    print(f"el creador : {creador}")
+    print(f"socket en dibujar ventana inicio {el_socket}")
 
 def dibujar_ventana_final():
     BACKGROUND_IMAGE = add_path_file("fondo-inicio2.png")
