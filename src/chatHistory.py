@@ -12,21 +12,23 @@ FONT_SIZE = 17
 PADDING_X = 5
 PADDING_Y = 8
 MAX_LINEAS = 3
-
+banReceive = False
 class ChatHistory:
     def manejar_conexion(self,conn):
+        global banReceive
         while True:
             if self._mi_turno:
-                self._text =self._text + "Tu: " + self._text + "\n"
-                # mandar al socket
-                mensaje = self._text
-                self._socket.sendall(mensaje.encode())
-                # crear hilo de recibir
-                self._mi_turno = False
-
+                if banReceive:
+                    # self._text =self._text + "Tu: " + self._text + "\n"
+                    # mandar al socket
+                    mensaje = self._text
+                    self._socket.sendall(mensaje.encode())
+                    # crear hilo de recibir
+                    self._mi_turno = False
+                    banReceive = False
             else:
                 text = self.leer_socket()
-                self._text =self._text + "Oponente: " + self._text + "\n"
+                self._text = self._text + "Oponente: " + text + "\n"
                 self._mi_turno = True
 
 
@@ -56,13 +58,15 @@ class ChatHistory:
     
     def recive_data_input(self,text):
         # si puedo mandar (mi turno) entonces escribo en char
+        global banReceive
         self._text =self._text + "Tu: " + text + "\n"
+        banReceive = True
         # mandar al socket
-        mensaje = self._text
-        self._socket.sendall(mensaje.encode())
-        # crear hilo de recibir
-        self._mi_turno = False
-        print(f"\n\n\n finaliza recive_data_input se envia {mensaje.encode()}\n\n ")
+        # mensaje = self._text
+        # self._socket.sendall(mensaje.encode())
+        # # crear hilo de recibir
+        # self._mi_turno = False
+        # print(f"\n\n\n finaliza recive_data_input se envia {mensaje.encode()}\n\n ")
         
         
     def recive_data_socket(self):
