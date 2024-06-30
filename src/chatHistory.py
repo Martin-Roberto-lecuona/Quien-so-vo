@@ -27,8 +27,13 @@ class ChatHistory:
                     self._mi_turno = False
                     banReceive = False
             else:
-                text = self.leer_socket()
-                self._text = self._text + "Oponente: " + text + "\n"
+                # text = self.leer_socket()
+                # self._text = self._text + "Oponente: " + text + "\n"
+                
+                datos = self._socket.recv(1024)
+                if not datos:
+                    break
+                self._text = self._text + "Oponente: " + datos.decode() + "\n"
                 self._mi_turno = True
 
 
