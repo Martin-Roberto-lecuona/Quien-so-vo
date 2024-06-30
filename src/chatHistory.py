@@ -17,7 +17,7 @@ class ChatHistory:
     def manejar_conexion(self,conn):
         while True:
             if self._mi_turno:
-                self._text =self._text + "Tu: " + text + "\n"
+                self._text =self._text + "Tu: " + self._text + "\n"
                 # mandar al socket
                 mensaje = self._text
                 self._socket.sendall(mensaje.encode())
@@ -26,7 +26,7 @@ class ChatHistory:
 
             else:
                 text = self.leer_socket()
-                self._text =self._text + "Oponente: " + text + "\n"
+                self._text =self._text + "Oponente: " + self._text + "\n"
                 self._mi_turno = True
 
 
