@@ -17,15 +17,18 @@ class ChatHistory:
     def manejar_conexion(self,conn):
         while True:
             if self._mi_turno:
+                self._text =self._text + "Tu: " + text + "\n"
+                # mandar al socket
                 mensaje = self._text
-                conn.sendall(mensaje.encode())
+                self._socket.sendall(mensaje.encode())
+                # crear hilo de recibir
                 self._mi_turno = False
+
             else:
-                datos = conn.recv(1024)
-                if not datos:
-                    break
-                print(f"Turno del oponente: {datos.decode()}")
+                text = self.leer_socket()
+                self._text =self._text + "Oponente: " + text + "\n"
                 self._mi_turno = True
+
 
 
     def __init__(self, x, y, ancho, alto, text="Historial : \n", el_socket: Any = None , creador: Any = None) -> None:
