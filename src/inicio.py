@@ -1,8 +1,19 @@
+import socket
 import pyray as rl
-import sys
+from cryptography.fernet import Fernet
+import socket
+from pyngrok import ngrok
+import requests
+from constants import base_url
 
 ANCHO_MOUSE = 0.5
 
+# Para usar una clave guardada
+with open("../security/clave.key", "rb") as key_file:
+    clave = key_file.read()
+
+# Crear un objeto Fernet con la clave
+cipher_suite = Fernet(clave)
 
 class Inicio:
 
@@ -25,6 +36,8 @@ class Inicio:
         self._unirse_partida = rl.Rectangle((ancho / 2) + 10, alto / 3,
                                             ancho / 4, alto / 6)
         self._visible = 1
+        self._socket = None
+        self._creador = None
 
     def dibujar(self):
         try:
@@ -72,16 +85,88 @@ class Inicio:
     def on_click(self, punto) -> bool:
 
         if rl.check_collision_point_rec(punto,self._crear_partida):
-            print("Ejecutar Servidor")
+            self._socket  = self.crear_partida()
+            self._creador = True
             self._visible = 0
         elif rl.check_collision_point_rec(punto,self._unirse_partida):
-            print("Ejecutar Cliente")
+            codigo = input("Ingresar codigo: ")
+            self._socket  = self.unirse_partida(codigo)
+            self._creador = False
             self._visible = 0
 
         return rl.check_collision_point_rec(punto,self._fondo)
 
     def get_visible(self):
         return self._visible == 1
-
+    
+    def get_socket(self):
+        return self._socket,self._creador
+    
     def __del__(self):
         rl.unload_texture(self._textura)
+    
+    def cifrar_datos(self,datos):
+        datos_bytes = datos.encode('utf-8') 
+        return cipher_suite.encrypt(datos_bytes).decode()
+    
+    def descifrar_datos(self,datos):
+        datos_bytes = cipher_suite.decrypt(datos.encode())  
+        return datos_bytes.decode('utf-8') 
+
+    def add_text_api(self,puerto_encriptado):
+        url = f"{base_url}/add/"
+        payload = {
+            "text": puerto_encriptado
+        }
+        response = requests.post(url, json=payload)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print("Error al agregar el texto:", response.status_code, response.json())
+            exit(-1)
+
+    def crear_partida(self) -> socket:
+        server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server_socket.bind(("0.0.0.0", 0))  # Bind a cualquier puerto disponible
+        server_socket.listen(1)
+        puerto = server_socket.getsockname()[1]
+
+        # Inicia un túnel ngrok para el puerto del servidor
+        url_tunel = ngrok.connect(puerto, "tcp")
+        url_cifrada = self.cifrar_datos(url_tunel.public_url)
+        response_api = self.add_text_api(url_cifrada)
+        print(f"Partida creada. codigo de sala: {response_api}")
+        print(f"Esperando conexión en el puerto: {puerto}")
+
+        conn, addr = server_socket.accept()
+        print(f"Conectado con {addr}")
+        print(f"socket: {conn}")
+
+        return conn
+    
+    def get_text_api(self,codigo_sala):
+        url = f"{base_url}/get/{codigo_sala}"
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print("Error al obtener el texto:", response.status_code, response.json())
+            exit(-1)
+
+
+    def unirse_partida(self,code):
+        # Obtiene la IP y el puerto del URL de ngrok
+        
+        url_ngrok = self.get_text_api(code)
+        url_ngrok = url_ngrok["text"]
+        print(f"\n\nURL NEGROK: {url_ngrok}\n\n")
+        
+        url_ngrok = self.descifrar_datos(url_ngrok)
+        _, direccion = url_ngrok.split("//")
+        ip_remota, puerto_codificado = direccion.split(":")
+        puerto = int(puerto_codificado)
+        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client_socket.connect((ip_remota, puerto))
+        print(f"Conectado al servidor en IP: {ip_remota}, Puerto: {puerto}")
+
+        return client_socket
