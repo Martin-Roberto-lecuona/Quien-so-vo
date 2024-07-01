@@ -24,7 +24,7 @@ class ChatHistory:
             if self._mi_turno:
                 if banReceive:
                     # mandar al socket
-                    mensaje = self._text
+                    mensaje = self._linea
                     self._socket.sendall(mensaje.encode())
                     # crear hilo de recibir
                     self._mi_turno = False
@@ -47,6 +47,7 @@ class ChatHistory:
         self._campo = rl.Rectangle(x, y, ancho, alto)
 
         self._text = text
+        self._linea = ""
 
         self._tam_linea = 0
         self._cant_lineas = 0
@@ -70,6 +71,7 @@ class ChatHistory:
         # si puedo mandar (mi turno) entonces escribo en char
         global banReceive
         self._text =self._text + "Tu: " + text + "\n"
+        self._linea = text
         banReceive = True
         
         
