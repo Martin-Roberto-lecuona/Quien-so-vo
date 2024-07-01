@@ -72,6 +72,8 @@ class ChatHistory:
         global banReceive
         self._text =self._text + "Tu: " + text + "\n"
         self._linea = text
+        if(len(self._linea) >= 15):
+            self._linea = self._linea[:15] + "\n" +  self._linea[15:]
         banReceive = True
         
         
