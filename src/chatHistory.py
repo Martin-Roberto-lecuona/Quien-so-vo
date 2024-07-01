@@ -70,10 +70,11 @@ class ChatHistory:
     def recive_data_input(self,text):
         # si puedo mandar (mi turno) entonces escribo en char
         global banReceive
-        self._text =self._text + "Tu: " + text + "\n"
         self._linea = text
         if(len(self._linea) >= 15):
             self._linea = self._linea[:15] + "\n" +  self._linea[15:]
+        
+        self._text =self._text + "Tu: " + self._linea + "\n"
         banReceive = True
         
         
