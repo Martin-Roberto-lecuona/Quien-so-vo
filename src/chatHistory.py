@@ -13,32 +13,37 @@ PADDING_X = 5
 PADDING_Y = 8
 MAX_LINEAS = 3
 banReceive = False
+maxMensajes = 5 
+cantMensajes = 0
 class ChatHistory:
     def manejar_conexion(self,conn):
         global banReceive
+        global maxMensajes
+        global cantMensajes
         while True:
             if self._mi_turno:
                 if banReceive:
-                    # self._text =self._text + "Tu: " + self._text + "\n"
                     # mandar al socket
                     mensaje = self._text
                     self._socket.sendall(mensaje.encode())
                     # crear hilo de recibir
                     self._mi_turno = False
                     banReceive = False
-            else:
-                # text = self.leer_socket()
-                # self._text = self._text + "Oponente: " + text + "\n"
-                
+            else: 
+                if cantMensajes >= maxMensajes:
+                    self._text = ""
+                    cantMensajes = 0     
                 datos = self._socket.recv(1024)
                 if not datos:
                     break
                 self._text = self._text + "Oponente: " + datos.decode() + "\n"
+                cantMensajes+=1
+                
                 self._mi_turno = True
 
 
 
-    def __init__(self, x, y, ancho, alto, text="Historial : \n", el_socket: Any = None , creador: Any = None) -> None:
+    def __init__(self, x, y, ancho, alto, text="", el_socket: Any = None , creador: Any = None) -> None:
         self._campo = rl.Rectangle(x, y, ancho, alto)
 
         self._text = text
@@ -66,12 +71,6 @@ class ChatHistory:
         global banReceive
         self._text =self._text + "Tu: " + text + "\n"
         banReceive = True
-        # mandar al socket
-        # mensaje = self._text
-        # self._socket.sendall(mensaje.encode())
-        # # crear hilo de recibir
-        # self._mi_turno = False
-        # print(f"\n\n\n finaliza recive_data_input se envia {mensaje.encode()}\n\n ")
         
         
     def recive_data_socket(self):
