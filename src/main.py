@@ -14,6 +14,7 @@ from screeninfo import get_monitors
 
 el_socket   = None
 creador     = None
+ganaste     = False
 
 monitor = get_monitors()[0]
 SCREEN_WIDTH = int(monitor.width * 0.85)
@@ -43,6 +44,7 @@ def configuracion_inicial():
     rl.set_target_fps(60)
 
 def dibujar_ventana_juego():
+    global ganaste
     ANCHO_TABLERO = 300
     ALTO_TABLERO = 650
     ANCHO_INPUT_FIELD = 500
@@ -71,7 +73,14 @@ def dibujar_ventana_juego():
         rl.draw_text(f"actual: {rl.get_screen_width()}, {rl.get_screen_height()} base: {SCREEN_WIDTH}, {SCREEN_HEIGHT} fps: {rl.get_fps()}",0,0,30,rl.WHITE)
 
         mi_personaje.elegir_personaje(tablero.obtener_personaje_aleatorio())
-
+        
+        personaje_adivinado = chat_history.get_personaje_adivinado()
+        if personaje_adivinado != -1:
+            if personaje_adivinado == mi_personaje.get_id():
+                chat_history.recive_command("ganaste")
+            else:
+                chat_history.recive_command("perdiste")
+            terminar_juego = True
         if rl.is_mouse_button_pressed(rl.MouseButton.MOUSE_BUTTON_LEFT):
             mouse_pos = rl.get_mouse_position()
             print(f"mouse: {mouse_pos.x}, {mouse_pos.y}")
@@ -81,8 +90,14 @@ def dibujar_ventana_juego():
             if boton_adivinar_presionado :
                 personaje_adivinado = tablero.obtener_personaje(mouse_pos)
                 if personaje_adivinado != None:
-                    print(f"personaje Adivinado: {personaje_adivinado._nombre}")
+                    print(f"personaje Adivinado: {personaje_adivinado._name}")
+                    chat_history.recive_command(personaje_adivinado._id)
                     boton_adivinar_presionado = boton_adivinar.cambiar_estado()
+                    response = chat_history.get_win_response()
+                    while (response == None):
+                        response = chat_history.get_win_response()
+                    if (response == "ganaste"):
+                        ganaste = True
                     terminar_juego = True
         
         if input_field.overflow():

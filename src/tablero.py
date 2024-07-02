@@ -2,7 +2,7 @@ import pyray as rl
 from personaje import Personaje
 from utilities import *
 import random
-
+from constants import nombres_personajes
 FILAS = 3
 COLUMNAS = 5
 PADDING = 30
@@ -13,6 +13,8 @@ class Tablero:
     def __init__(self) -> None:
         self._personajes = [[None for _ in range(COLUMNAS)]
                             for _ in range(FILAS)]
+
+        
 
         ancho_celda = 180
         alto_celda = 200
@@ -26,7 +28,7 @@ class Tablero:
                 pos_y = (i + 1) * (alto_celda + PADDING) - alto_celda
 
                 self._personajes[i][j] = Personaje(pos_x, pos_y, ancho_celda,
-                                                   alto_celda, imagen_ruta)
+                                                   alto_celda, imagen_ruta,n_personaje,nombres_personajes[n_personaje])
 
     def dibujar(self, adivinando):
         for i in range(FILAS):

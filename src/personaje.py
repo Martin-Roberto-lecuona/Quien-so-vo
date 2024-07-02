@@ -5,8 +5,9 @@ import pyray as rl
 
 class Personaje:
 
-    def __init__(self, x, y, ancho, alto, imagen_ruta, opacidad=1.0):
-        self._nombre = "crear diccionario"
+    def __init__(self, x, y, ancho, alto, imagen_ruta, opacidad=1.0, id = 0, name = "None"):
+        self._name = name
+        self._id = id
         self._hover_color = rl.YELLOW
         self._imagen_ruta = imagen_ruta
         image = rl.load_image(imagen_ruta)
@@ -33,9 +34,9 @@ class Personaje:
         rl.draw_rectangle_rounded(self._rectangulo, borde_redondeado, 0, rl.WHITE)
         rl.draw_texture_ex(self._textura, (self._rectangulo.x, self._rectangulo.y), 0.0, 1, color_modificado)
 
-        nombre_x = self._rectangulo.x + self._rectangulo.width // 2 - rl.measure_text(self._nombre, tam_texto) // 2
+        nombre_x = self._rectangulo.x + self._rectangulo.width // 2 - rl.measure_text(self._name, tam_texto) // 2
         nombre_y = self._rectangulo.y + self._rectangulo.height + 5 
-        rl.draw_text(self._nombre, int(nombre_x), int(nombre_y), tam_texto, rl.WHITE)
+        rl.draw_text(self._name, int(nombre_x), int(nombre_y), tam_texto, rl.WHITE)
         borde = rl.BLACK
         if self.on_hover():
             borde = self._hover_color

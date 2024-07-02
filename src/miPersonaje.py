@@ -1,9 +1,13 @@
 import pyray as rl
 from personaje import Personaje
+import random
+from constants import nombres_personajes
 
 class MiPersonaje:
     def __init__(self,x,y,ancho,alto,imagen_ruta) -> None:
-        self._nombre = imagen_ruta[imagen_ruta.rfind('/')+1:imagen_ruta.find('.')]
+        self._id = random.randint(1, 15)
+        self._nombre = nombres_personajes[self._id]
+        imagen_ruta = "../img/personaje_" + str(self._id) + ".png"
         image = rl.load_image(imagen_ruta)
         rl.image_resize(image, ancho, alto)
         self._textura = rl.load_texture_from_image(image)
@@ -16,6 +20,7 @@ class MiPersonaje:
 
 
         self._rectangulo = rl.Rectangle(x, y, ancho, alto)
+    
     def dibujar(self):
         color_modificado = rl.Color(255, 255, 255, 255)
         borde_redondeado = 0.05
