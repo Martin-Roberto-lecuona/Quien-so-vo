@@ -1,12 +1,15 @@
 import pyray as rl
 import sys
+from utilities import add_path_file
 
 ANCHO_MOUSE = 0.5
-
+FONT_SIZE = 40
+IMAGE_BACKGROUND = add_path_file("pantallaLoser.png")
+FONT_PATH = add_path_file("Roboto-Black.ttf") 
 
 class Final:
 
-    def __init__(self, ancho, alto, imagen_ruta):
+    def __init__(self, bkg_width, bkg_heigh, imagen_ruta, ganar):
         self._textura = rl.load_texture(imagen_ruta)
         if (self._textura.id == 0):
             rl.trace_log(rl.TraceLogLevel.LOG_WARNING,
@@ -15,25 +18,32 @@ class Final:
 
         print("Imagen Ruta: " + imagen_ruta)
 
-        self._fondo = rl.Rectangle(0, 0, ancho, alto)
+        self._fondo = rl.Rectangle(0, 0, bkg_width, bkg_heigh)
 
-        self._titulo = rl.Rectangle(((ancho-(ancho/2))/2),((alto-(alto/6))/20),(ancho/2),(alto/4))
+        self._titulo = rl.Rectangle(((bkg_width-(bkg_width/2))/2),((bkg_heigh-(bkg_heigh/6))/20),(bkg_width/2),(bkg_heigh/4))
 
-        self._cerrar_partida = rl.Rectangle((ancho / 4) - 10, alto / 3,
-                                          (ancho/2),(alto/4))
+        self._cerrar_partida = rl.Rectangle((bkg_width / 4) - 10, bkg_heigh / 3,
+                                          (bkg_width/2),(bkg_heigh/4))
         self._visible = 1
+        self._ganar = ganar
+        self._bkg_width = bkg_width
+        self._bkg_heigh = bkg_heigh
 
     def dibujar(self):
-        try:
-            self.dibujar_fondo()
+        if self._ganar:
+            self.dibujar_perder()
+        else :
+            ## hacer funcion
+            try:
+                self.dibujar_fondo()
 
-            self.dibujar_titulo()
+                self.dibujar_titulo()
 
-            self.dibujar_boton_cerrar_partida()
+                self.dibujar_boton_cerrar_partida()
 
-        except ZeroDivisionError:
-            print("ERROR DE TEXTURA")
-            exit()
+            except ZeroDivisionError:
+                print("ERROR DE TEXTURA")
+                exit()
 
 
     def dibujar_titulo(self):
@@ -70,3 +80,39 @@ class Final:
 
     def __del__(self):
         rl.unload_texture(self._textura)
+
+    
+    def draw_background_lose(self):
+        rl.clear_background(rl.RAYWHITE)
+        rl.draw_rectangle(0, 0, self._bkg_width, self._bkg_heigh, rl.SKYBLUE)
+
+    def draw_image_lose(self,texture):
+        source_rec = rl.Rectangle(0, 0, texture.width, texture.height)
+        dest_rec = rl.Rectangle(self._bkg_width / 2, self._bkg_heigh / 2, texture.width, texture.height)
+        origin = rl.Vector2(texture.width / 2, texture.height / 2)
+        rotation = 0
+        rl.draw_texture_pro(texture, source_rec, dest_rec, origin, rotation, rl.WHITE)
+
+    def draw_message_lose(self,font):
+        message1 = "Perdiste!"
+
+        text_width1 = rl.measure_text_ex(font, message1, FONT_SIZE, 1).x
+        text_height = FONT_SIZE 
+
+        rl.draw_text_ex(font, message1, rl.Vector2((self._bkg_width - text_width1) / 2, (self._bkg_heigh - text_height) / 2), FONT_SIZE, 1, rl.BLACK)
+
+        
+    
+    def load_texture_lose():
+        image = rl.load_image(IMAGE_BACKGROUND)
+        return rl.load_texture_from_image(image)
+
+    def load_font_lose():
+        return rl.load_font(FONT_PATH)
+    
+    def dibujar_perder(self):
+        texture = self.load_texture_lose()
+        font = self.load_font_lose()
+        self.draw_background_lose()
+        self.draw_image_lose(texture)
+        self.draw_message_lose(font)

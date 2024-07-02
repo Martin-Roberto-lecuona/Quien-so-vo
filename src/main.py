@@ -130,7 +130,7 @@ def dibujar_ventana_inicio():
 def dibujar_ventana_final():
     BACKGROUND_IMAGE = add_path_file("fondo-inicio2.png")
 
-    final = Final(SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_IMAGE)
+    final = Final(SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_IMAGE, ganaste)
     while final.get_visible() and not rl.window_should_close():
         rl.begin_drawing()
         rl.clear_background(rl.DARKGREEN)
