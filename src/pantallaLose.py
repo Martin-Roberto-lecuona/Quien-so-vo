@@ -1,5 +1,6 @@
-import pyray  as rl
+import raylib as rl
 from utilities import add_path_file
+from raylib import init_window
 
 SCREEN_WIDTH = 500
 SCREEN_HEIGHT = 500
