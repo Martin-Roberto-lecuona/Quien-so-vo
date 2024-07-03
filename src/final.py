@@ -5,7 +5,6 @@ from utilities import add_path_file
 ANCHO_MOUSE = 0.5
 FONT_SIZE = 40
 IMAGE_BACKGROUND = add_path_file("pantallaLoser.png")
-FONT_PATH = add_path_file("Roboto-Black.ttf") 
 
 class Final:
 
@@ -85,6 +84,7 @@ class Final:
     def __del__(self):
         rl.unload_texture(self._textura)
 
+
     
     def draw_background_lose(self):
         rl.clear_background(rl.RAYWHITE)
@@ -97,26 +97,16 @@ class Final:
         rotation = 0
         rl.draw_texture_pro(texture, source_rec, dest_rec, origin, rotation, rl.WHITE)
 
-    def draw_message_lose(self,font):
+    def draw_message_lose(self):
         message1 = "Perdiste!"
 
-        text_width1 = rl.measure_text_ex(font, message1, FONT_SIZE, 1).x
+        text_width1 = rl.measure_text_ex(message1, FONT_SIZE, 1).x
         text_height = FONT_SIZE 
 
-        rl.draw_text_ex(font, message1, rl.Vector2((self._bkg_width - text_width1) / 2, (self._bkg_heigh - text_height) / 2), FONT_SIZE, 1, rl.BLACK)
+        rl.draw_text_ex(message1, rl.Vector2((self._bkg_width - text_width1) / 2, (self._bkg_heigh - text_height) / 2), FONT_SIZE, 1, rl.BLACK)
 
-        
-    
-    def load_texture_lose(self):
-        image = rl.load_image(IMAGE_BACKGROUND)
-        return rl.load_texture_from_image(image)
-
-    def load_font_lose(self):
-        return rl.load_font(FONT_PATH)
-    
     def dibujar_perder(self):
-        texture = self.load_texture_lose()
-        font = self.load_font_lose()
+        self._textura = rl.load_texture(IMAGE_BACKGROUND)
         self.draw_background_lose()
-        self.draw_image_lose(texture)
-        self.draw_message_lose(font)
+        self.draw_image_lose(self._textura)
+        self.draw_message_lose()
