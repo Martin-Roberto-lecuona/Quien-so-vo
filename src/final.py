@@ -29,30 +29,23 @@ class Final:
         self._bkg_heigh = bkg_heigh
 
     def dibujar(self):
+        text = "PERDISTEEE"
         if self._ganar:
-            try:
-                self.dibujar_perder()
-            except ZeroDivisionError:
-                print("ERROR DE TEXTURA")
-                exit()
+            text = "GANASSSTE"
         else :
-            ## hacer funcion
             try:
                 self.dibujar_fondo()
-
-                self.dibujar_titulo()
-
+                self.dibujar_titulo(text)
                 self.dibujar_boton_cerrar_partida()
-
             except ZeroDivisionError:
                 print("ERROR DE TEXTURA")
                 exit()
 
 
-    def dibujar_titulo(self):
+    def dibujar_titulo(self, text):
         TAM_FONT_TITULO = 70
         rl.draw_rectangle_rec(self._titulo,rl.YELLOW)
-        texto_titulo = "Quien so vo?"
+        texto_titulo = text
         tt_measure = rl.measure_text_ex(rl.get_font_default(),texto_titulo,TAM_FONT_TITULO,0.0)
         rl.draw_text(texto_titulo, int(self._titulo.x + self._titulo.width/2 - (tt_measure.x/2)),
                          int(self._titulo.y+self._titulo.height/2-(tt_measure.y/2)),TAM_FONT_TITULO,rl.BLACK)
@@ -83,30 +76,3 @@ class Final:
 
     def __del__(self):
         rl.unload_texture(self._textura)
-
-
-    
-    def draw_background_lose(self):
-        rl.clear_background(rl.RAYWHITE)
-        rl.draw_rectangle(0, 0, self._bkg_width, self._bkg_heigh, rl.SKYBLUE)
-
-    def draw_image_lose(self,texture):
-        source_rec = rl.Rectangle(0, 0, texture.width, texture.height)
-        dest_rec = rl.Rectangle(self._bkg_width / 2, self._bkg_heigh / 2, texture.width, texture.height)
-        origin = rl.Vector2(texture.width / 2, texture.height / 2)
-        rotation = 0
-        rl.draw_texture_pro(texture, source_rec, dest_rec, origin, rotation, rl.WHITE)
-
-    def draw_message_lose(self):
-        message1 = "Perdiste!"
-
-        text_width1 = rl.measure_text_ex(message1, FONT_SIZE, 1).x
-        text_height = FONT_SIZE 
-
-        rl.draw_text_ex(message1, rl.Vector2((self._bkg_width - text_width1) / 2, (self._bkg_heigh - text_height) / 2), FONT_SIZE, 1, rl.BLACK)
-
-    def dibujar_perder(self):
-        self._textura = rl.load_texture(IMAGE_BACKGROUND)
-        self.draw_background_lose()
-        self.draw_image_lose(self._textura)
-        self.draw_message_lose()
