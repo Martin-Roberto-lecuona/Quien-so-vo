@@ -1,8 +1,9 @@
 import socket
+import threading
 import pyray as rl
 from cryptography.fernet import Fernet
 import socket
-from pyngrok import ngrok
+from pyngrok import ngrok, exception
 import requests
 from constants import base_url
 
@@ -85,12 +86,19 @@ class Inicio:
     def on_click(self, punto) -> bool:
 
         if rl.check_collision_point_rec(punto,self._crear_partida):
-            self._socket  = self.crear_partida()
-            self._creador = True
-            self._visible = 0
+            try:
+                hilo = threading.Thread(target=self.crear_partida)
+                hilo.start()
+                hilo.join()
+                self._creador = True
+                self._visible = 0
+            except exception.PyngrokNgrokError:
+                exit()
         elif rl.check_collision_point_rec(punto,self._unirse_partida):
             codigo = input("Ingresar codigo: ")
-            self._socket  = self.unirse_partida(codigo)
+            hilo = threading.Thread(target=self.unirse_partida, args=(codigo,))
+            hilo.start()
+            hilo.join()
             self._creador = False
             self._visible = 0
 
