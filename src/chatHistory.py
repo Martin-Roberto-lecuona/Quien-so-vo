@@ -14,7 +14,6 @@ PADDING_X = 5
 PADDING_Y = 8
 MAX_LINEAS = 3
 banReceive = False
-banWait = False
 maxMensajes = 5 
 cantMensajes = 0
 alive_thread = True
@@ -28,7 +27,12 @@ class ChatHistory:
             if self._mi_turno:
                 if banReceive:
                     mensaje = self._linea
+                    match_ganaste = re.match(r'^/ganaste$', mensaje)
+                    match_perdiste = re.match(r'^/perdiste$', mensaje)
                     self._socket.sendall(mensaje.encode())
+                    if (match_ganaste or match_perdiste):
+                        self._socket.close()
+                        break
                     self._mi_turno = False
                     banReceive = False
             else: 
@@ -49,7 +53,8 @@ class ChatHistory:
                     elif match_ganaste or match_perdiste:
                         self._win_response = mensaje_recibido[1:]
                         print(f"mensaje_recibido en ganaste o perdiste |{self._win_response}|" )
-                        alive_thread = False
+                        self._socket.close()
+                        break
                     else:
                         self._text = self._text + "Oponente: " + mensaje_recibido + "\n"
                         cantMensajes += 1
@@ -107,10 +112,8 @@ class ChatHistory:
     
     def recive_command(self, text):
         global banReceive
-        global banWait
         self._linea = "/" + str(text)
         banReceive = True
-        banWait = True
         
     def recive_data_socket(self):
         # esperar lectura socket 
