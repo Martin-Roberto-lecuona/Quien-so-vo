@@ -86,11 +86,14 @@ class Inicio:
     def on_click(self, punto) -> bool:
 
         if rl.check_collision_point_rec(punto,self._crear_partida):
-            hilo = threading.Thread(target=self.crear_partida)
-            hilo.start()
-            hilo.join()
-            self._creador = True
-            self._visible = 0
+            try:
+                hilo = threading.Thread(target=self.crear_partida)
+                hilo.start()
+                hilo.join()
+                self._creador = True
+                self._visible = 0
+            except Exception.PyngrokNgrokError:
+                exit()
         elif rl.check_collision_point_rec(punto,self._unirse_partida):
             codigo = input("Ingresar codigo: ")
             hilo = threading.Thread(target=self.unirse_partida, args=(codigo,))
