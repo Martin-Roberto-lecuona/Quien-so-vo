@@ -76,14 +76,14 @@ def dibujar_ventana_juego():
         
         personaje_adivinado = chat_history.get_personaje_adivinado()
         if personaje_adivinado != -1:
-            print("personaje_adivinado: " + personaje_adivinado)
+            print("personaje_adivinado: " + str(personaje_adivinado))
             print("mi_personaje.get_id(): " + str(mi_personaje.get_id()))
             if personaje_adivinado == mi_personaje.get_id():
                 chat_history.recive_command("ganaste")
-                ganaste     = False
+                ganaste = False
             else:
                 chat_history.recive_command("perdiste")
-                ganaste     = True
+                ganaste = True
             terminar_juego = True
         if rl.is_mouse_button_pressed(rl.MouseButton.MOUSE_BUTTON_LEFT):
             mouse_pos = rl.get_mouse_position()
@@ -102,6 +102,8 @@ def dibujar_ventana_juego():
                         response = chat_history.get_win_response()
                     if (response == "ganaste"):
                         ganaste = True
+                    else:
+                        ganaste = False
                     terminar_juego = True
         
         if input_field.overflow():

@@ -31,7 +31,11 @@ class Final:
 
     def dibujar(self):
         if self._ganar:
-            self.dibujar_perder()
+            try:
+                self.dibujar_perder()
+            except ZeroDivisionError:
+                print("ERROR DE TEXTURA")
+                exit()
         else :
             ## hacer funcion
             try:
@@ -103,11 +107,11 @@ class Final:
 
         
     
-    def load_texture_lose():
+    def load_texture_lose(self):
         image = rl.load_image(IMAGE_BACKGROUND)
         return rl.load_texture_from_image(image)
 
-    def load_font_lose():
+    def load_font_lose(self):
         return rl.load_font(FONT_PATH)
     
     def dibujar_perder(self):
