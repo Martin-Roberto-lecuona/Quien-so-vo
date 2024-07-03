@@ -10,7 +10,7 @@ from botonAdivinar import BotonAdivinar
 from constants import game_name  
 import socket
 from screeninfo import get_monitors
-
+import gc
 
 el_socket   = None
 creador     = None
@@ -84,7 +84,6 @@ def dibujar_ventana_juego():
             else:
                 chat_history.recive_command("perdiste")
                 ganaste = True
-            del chat_history
             terminar_juego = True
         if rl.is_mouse_button_pressed(rl.MouseButton.MOUSE_BUTTON_LEFT):
             mouse_pos = rl.get_mouse_position()
@@ -105,13 +104,14 @@ def dibujar_ventana_juego():
                         ganaste = True
                     else:
                         ganaste = False
-                    del chat_history
                     terminar_juego = True
         
         if input_field.overflow():
             input_field.dibujar_con_crlf(1.0)
 
         rl.end_drawing()
+    
+    del chat_history
 
 def dibujar_ventana_inicio():
     global creador
@@ -154,3 +154,4 @@ def dibujar_ventana_final():
         rl.end_drawing()
 if __name__ == "__main__":
     main()
+    gc.collect()
