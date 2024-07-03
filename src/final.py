@@ -29,6 +29,7 @@ class Final:
         self._bkg_heigh = bkg_heigh
 
     def dibujar(self):
+        print(f"self._ganar en final: {self._ganar}")
         text = "GANASSSTE"
         if self._ganar:
             text = "PERDISTEEE"

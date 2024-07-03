@@ -99,7 +99,7 @@ class Inicio:
         elif rl.check_collision_point_rec(punto,self._unirse_partida):
             codigo = input("Ingresar codigo: ")
             tries = 0
-            while(self._socket == None and tries > 5):
+            while(self._socket == None and tries < 6):
                 hilo = threading.Thread(target=self.unirse_partida, args=(codigo,))
                 hilo.start()
                 hilo.join()
