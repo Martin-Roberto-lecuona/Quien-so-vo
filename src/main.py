@@ -72,7 +72,7 @@ def dibujar_ventana_juego():
 
         rl.draw_text(f"actual: {rl.get_screen_width()}, {rl.get_screen_height()} base: {SCREEN_WIDTH}, {SCREEN_HEIGHT} fps: {rl.get_fps()}",0,0,30,rl.WHITE)
 
-        mi_personaje.elegir_personaje(tablero.obtener_personaje_aleatorio())
+        # mi_personaje.elegir_personaje(tablero.obtener_personaje_aleatorio())
         
         personaje_adivinado = chat_history.get_personaje_adivinado()
         if personaje_adivinado != -1:
