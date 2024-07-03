@@ -1,4 +1,4 @@
-base_url = "https://1d05-190-192-155-209.ngrok-free.app" # cambia si prendo y apago el server
+base_url = "hhttps://e6a8-186-12-0-66.ngrok-free.app" # cambia si prendo y apago el server
 game_name = 'Quien so vo?'
 
 nombres_personajes = {
