@@ -1,3 +1,4 @@
+import json
 import os
 import socket
 import sys
@@ -41,6 +42,7 @@ class Inicio:
         self._visible = 1
         self._socket = None
         self._creador = None
+        self._codigo = "codigo de sala: "
 
     def dibujar(self):
         try:
@@ -51,18 +53,25 @@ class Inicio:
             self.dibujar_boton_iniciar_partida()
 
             self.dibujar_boton_unirse_a_partida()
+
+            # self.dibujar_codigo()
         except ZeroDivisionError:
             print("ERROR DE TEXTURA")
             exit()
 
-
+    def dibujar_codigo(self):
+        print(f"entra a dibujar {self._codigo}")
+        TAM_FONT_RTA=30
+        measure = rl.measure_text_ex(rl.get_font_default(), str(self._codigo),TAM_FONT_RTA,0.0)
+        rl.draw_text( str(self._codigo), int(self._crear_partida.x + self._crear_partida.width/2 - (measure.x/2)),
+                         int(50 + self._crear_partida.y + self._crear_partida.height/2 - (measure.y/2)), TAM_FONT_RTA, rl.WHITE)
     def dibujar_titulo(self):
         TAM_FONT_TITULO = 70
         rl.draw_rectangle_rec(self._titulo,rl.YELLOW)
         texto_titulo = "Quien so vo?"
-        tt_measure = rl.measure_text_ex(rl.get_font_default(),texto_titulo,TAM_FONT_TITULO,0.0)
-        rl.draw_text(texto_titulo, int(self._titulo.x + self._titulo.width/2 - (tt_measure.x/2)),
-                         int(self._titulo.y+self._titulo.height/2-(tt_measure.y/2)),TAM_FONT_TITULO,rl.BLACK)
+        measure = rl.measure_text_ex(rl.get_font_default(),texto_titulo,TAM_FONT_TITULO,0.0)
+        rl.draw_text(texto_titulo, int(self._titulo.x + self._titulo.width/2 - (measure.x/2)),
+                         int(self._titulo.y+self._titulo.height/2-(measure.y/2)),TAM_FONT_TITULO,rl.BLACK)
 
     def dibujar_fondo(self):
         escala_ancho = self._fondo.width / self._textura.width
@@ -150,9 +159,9 @@ class Inicio:
         url_tunel = ngrok.connect(puerto, "tcp")
         url_cifrada = self.cifrar_datos(url_tunel.public_url)
         response_api = self.add_text_api(url_cifrada)
-        print(f"Partida creada. codigo de sala: {response_api}")
+        # self._codigo = "codigo de sala: " + str(response_api['id'])
+        print(f"Partida creada. codigo sala :{response_api}")
         print(f"Esperando conexión en el puerto: {puerto}")
-
         conn, addr = server_socket.accept()
         print(f"Conectado con {addr}")
         print(f"socket: {conn}")

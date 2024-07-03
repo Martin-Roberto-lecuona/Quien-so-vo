@@ -100,7 +100,8 @@ def dibujar_ventana_juego():
                     response = chat_history.get_win_response()
                     while (response == None):
                         response = chat_history.get_win_response()
-                    if (response == "ganaste"):
+                    print(f"response ultima {response}")
+                    if (str(response) == "ganaste"):
                         ganaste = True
                     else:
                         ganaste = False

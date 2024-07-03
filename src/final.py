@@ -30,7 +30,7 @@ class Final:
 
     def dibujar(self):
         text = "GANASSSTE"
-        if self._ganar:
+        if not self._ganar:
             text = "PERDISTEEE"
         try:
             self.dibujar_fondo()
