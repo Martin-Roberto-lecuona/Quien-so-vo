@@ -95,7 +95,7 @@ def dibujar_ventana_juego():
                 personaje_adivinado = tablero.obtener_personaje(mouse_pos)
                 if personaje_adivinado != None:
                     print(f"personaje Adivinado: {personaje_adivinado._name}")
-                    chat_history.recive_command(personaje_adivinado._id)
+                    chat_history.recive_command("adivinar " + str(personaje_adivinado._id))
                     boton_adivinar_presionado = boton_adivinar.cambiar_estado()
                     response = chat_history.get_win_response()
                     while (response == None):
