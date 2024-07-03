@@ -49,6 +49,7 @@ class ChatHistory:
                     elif match_ganaste or match_perdiste:
                         self._win_response = mensaje_recibido[1:]
                         print(f"mensaje_recibido en ganaste o perdiste |{self._win_response}|" )
+                        alive_thread = False
                     else:
                         self._text = self._text + "Oponente: " + mensaje_recibido + "\n"
                         cantMensajes += 1
