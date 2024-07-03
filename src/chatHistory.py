@@ -17,12 +17,14 @@ banReceive = False
 banWait = False
 maxMensajes = 5 
 cantMensajes = 0
+alive_thread = True
 class ChatHistory:
     def manejar_conexion(self,conn):
         global banReceive
         global maxMensajes
         global cantMensajes
-        while True:
+        global alive_thread
+        while alive_thread:
             if self._mi_turno:
                 if banReceive:
                     mensaje = self._linea
@@ -71,6 +73,8 @@ class ChatHistory:
         self._hilo_lectura.start()
 
     def __del__(self):
+        global alive_thread
+        alive_thread = False
         self._hilo_lectura.join()
 
     def dibujar(self):
