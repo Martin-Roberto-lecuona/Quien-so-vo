@@ -32,14 +32,13 @@ class Final:
         text = "PERDISTEEE"
         if self._ganar:
             text = "GANASSSTE"
-        else :
-            try:
-                self.dibujar_fondo()
-                self.dibujar_titulo(text)
-                self.dibujar_boton_cerrar_partida()
-            except ZeroDivisionError:
-                print("ERROR DE TEXTURA")
-                exit()
+        try:
+            self.dibujar_fondo()
+            self.dibujar_titulo(text)
+            self.dibujar_boton_cerrar_partida()
+        except ZeroDivisionError:
+            print("ERROR DE TEXTURA")
+            exit()
 
 
     def dibujar_titulo(self, text):
