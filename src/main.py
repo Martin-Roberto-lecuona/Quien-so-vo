@@ -76,6 +76,7 @@ def dibujar_ventana_juego():
         
         personaje_adivinado = chat_history.get_personaje_adivinado()
         if personaje_adivinado != -1:
+            
             if personaje_adivinado == mi_personaje.get_id():
                 chat_history.recive_command("ganaste")
             else:

@@ -57,6 +57,8 @@ class MiPersonaje:
             self._name = personaje._name
             self._personaje_elegido = True
     
+    def get_id(self):
+        return self._id
 
     def __del__(self):
         rl.unload_texture(self._textura)
