@@ -43,7 +43,7 @@ class ChatHistory:
                 match_perdiste = re.match(r'^/perdiste$', mensaje_recibido)
                 print("mensaje_recibido" + mensaje_recibido)
                 if match_adivinar:
-                    self._adivinado = int(mensaje_recibido[1:])
+                    self._adivinado = int(match_adivinar.group(1))
                 elif match_ganaste or match_perdiste:
                     self._win_response = mensaje_recibido[1:]
                 else:
