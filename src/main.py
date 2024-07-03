@@ -1,3 +1,4 @@
+import threading
 import pyray as rl
 from final import Final
 from inicio import Inicio
@@ -123,7 +124,8 @@ def dibujar_ventana_inicio():
     while inicio.get_visible() and not rl.window_should_close():
         rl.begin_drawing()
         rl.clear_background(rl.DARKGREEN)
-        inicio.dibujar()
+        hilo_dibujo = threading.Thread(target=inicio.dibujar())
+        hilo_dibujo.start()
         rl.draw_text(f"actual: {rl.get_screen_width()}, {rl.get_screen_height()} base: {SCREEN_WIDTH}, {SCREEN_HEIGHT} fps: {rl.get_fps()}",0,0,30,rl.WHITE)
 
         if rl.is_mouse_button_pressed(rl.MouseButton.MOUSE_BUTTON_LEFT):
@@ -132,6 +134,7 @@ def dibujar_ventana_inicio():
             inicio.on_click(mouse_pos)
 
         rl.end_drawing()
+        hilo_dibujo.join()
     el_socket,creador = inicio.get_socket()
     print(f"el creador : {creador}")
     print(f"socket en dibujar ventana inicio {el_socket}")

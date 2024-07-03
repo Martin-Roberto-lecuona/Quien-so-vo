@@ -9,6 +9,8 @@ import socket
 from pyngrok import ngrok, exception
 import requests
 from constants import base_url
+import multiprocessing
+import multiprocessing.shared_memory
 
 ANCHO_MOUSE = 0.5
 
@@ -40,9 +42,18 @@ class Inicio:
         self._unirse_partida = rl.Rectangle((ancho / 2) + 10, alto / 3,
                                             ancho / 4, alto / 6)
         self._visible = 1
-        self._socket = None
+        
+        self._socket_mem =  multiprocessing.shared_memory.SharedMemory(create=True, size=1024)
+        self._codigo_mem = multiprocessing.shared_memory.SharedMemory(create=True, size=256) 
+        
+        # self._socket = None
+        self._socket = self._socket_mem.buf
         self._creador = None
-        self._codigo = "codigo de sala: "
+        # self._codigo = "codigo de sala: "
+        self._codigo = multiprocessing.Array('c', b'', lock=False)
+
+       
+
 
     def dibujar(self):
         try:
@@ -54,17 +65,19 @@ class Inicio:
 
             self.dibujar_boton_unirse_a_partida()
 
-            # self.dibujar_codigo()
+            self.dibujar_codigo()
         except ZeroDivisionError:
             print("ERROR DE TEXTURA")
             exit()
 
     def dibujar_codigo(self):
-        print(f"entra a dibujar {self._codigo}")
+        codigo_sala = self._codigo.value.decode('utf-8')
+        print(f"entra a dibujar {codigo_sala}")
         TAM_FONT_RTA=30
-        measure = rl.measure_text_ex(rl.get_font_default(), str(self._codigo),TAM_FONT_RTA,0.0)
-        rl.draw_text( str(self._codigo), int(self._crear_partida.x + self._crear_partida.width/2 - (measure.x/2)),
+        measure = rl.measure_text_ex(rl.get_font_default(), codigo_sala,TAM_FONT_RTA,0.0)
+        rl.draw_text( codigo_sala, int(self._crear_partida.x + self._crear_partida.width/2 - (measure.x/2)),
                          int(50 + self._crear_partida.y + self._crear_partida.height/2 - (measure.y/2)), TAM_FONT_RTA, rl.WHITE)
+    
     def dibujar_titulo(self):
         TAM_FONT_TITULO = 70
         rl.draw_rectangle_rec(self._titulo,rl.YELLOW)
@@ -98,9 +111,12 @@ class Inicio:
 
         if rl.check_collision_point_rec(punto,self._crear_partida):
             try:
-                hilo = threading.Thread(target=self.crear_partida)
-                hilo.start()
-                hilo.join()
+                # hilo = threading.Thread(target=self.crear_partida)
+                # hilo.start()
+                # hilo.join()
+                proceso = multiprocessing.Process(target=self.crear_partida)
+                proceso.start()
+                proceso.join()
                 self._creador = True
                 self._visible = 0
             except exception.PyngrokNgrokError:
@@ -128,6 +144,10 @@ class Inicio:
     
     def __del__(self):
         rl.unload_texture(self._textura)
+        self._socket_mem.close()
+        self._socket_mem.unlink()
+        self._codigo_mem.close()
+        self._codigo_mem.unlink()
     
     def cifrar_datos(self,datos):
         datos_bytes = datos.encode('utf-8') 
@@ -154,19 +174,20 @@ class Inicio:
         server_socket.bind(("0.0.0.0", 0))  # Bind a cualquier puerto disponible
         server_socket.listen(1)
         puerto = server_socket.getsockname()[1]
-
         # Inicia un túnel ngrok para el puerto del servidor
         url_tunel = ngrok.connect(puerto, "tcp")
         url_cifrada = self.cifrar_datos(url_tunel.public_url)
         response_api = self.add_text_api(url_cifrada)
         # self._codigo = "codigo de sala: " + str(response_api['id'])
+        aux = "codigo de sala: " + str(response_api['id'])
+        self._codigo.value = aux.encode('utf-8')
         print(f"Partida creada. codigo sala :{response_api}")
         print(f"Esperando conexión en el puerto: {puerto}")
-        conn, addr = server_socket.accept()
+        conn, addr = server_socket.accept() # hasta que no termina esto no dibuja el codigo de sala
         print(f"Conectado con {addr}")
         print(f"socket: {conn}")
-
         self._socket = conn
+        server_socket = socket.fromshare(self._socket)
     
     def get_text_api(self,codigo_sala):
         url = f"{base_url}/get/{codigo_sala}"
