@@ -136,6 +136,7 @@ def dibujar_ventana_inicio():
     print(f"socket en dibujar ventana inicio {el_socket}")
 
 def dibujar_ventana_final():
+    global ganaste
     BACKGROUND_IMAGE = add_path_file("fondo-inicio2.png")
 
     final = Final(SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_IMAGE, ganaste)

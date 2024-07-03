@@ -1,3 +1,4 @@
+import os
 import socket
 import threading
 import pyray as rl
@@ -131,7 +132,7 @@ class Inicio:
             return response.json()
         else:
             print("Error al agregar el texto:", response.status_code, response.json())
-            exit(-1)
+            exit()
 
     def crear_partida(self) -> socket:
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -159,7 +160,7 @@ class Inicio:
             return response.json()
         else:
             print("Error al obtener el texto:", response.status_code, response.json())
-            exit(-1)
+            exit()
 
 
     def unirse_partida(self,code):
