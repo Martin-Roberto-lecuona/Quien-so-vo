@@ -55,6 +55,7 @@ class ChatHistory:
                     
                     self._mi_turno = True
                 except socket.timeout:
+                    print(f"en cathc {alive_thread}")
                     continue
 
 
@@ -79,6 +80,7 @@ class ChatHistory:
     def __del__(self):
         global alive_thread
         alive_thread = False
+        print(f"en DELETE{alive_thread}")
         self._hilo_lectura.join()
 
     def dibujar(self):
