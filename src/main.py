@@ -84,6 +84,7 @@ def dibujar_ventana_juego():
             else:
                 chat_history.recive_command("perdiste")
                 ganaste = True
+            del chat_history
             terminar_juego = True
         if rl.is_mouse_button_pressed(rl.MouseButton.MOUSE_BUTTON_LEFT):
             mouse_pos = rl.get_mouse_position()
@@ -104,6 +105,7 @@ def dibujar_ventana_juego():
                         ganaste = True
                     else:
                         ganaste = False
+                    del chat_history
                     terminar_juego = True
         
         if input_field.overflow():

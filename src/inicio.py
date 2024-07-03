@@ -95,6 +95,7 @@ class Inicio:
             codigo = input("Ingresar codigo: ")
             hilo = threading.Thread(target=self.unirse_partida, args=(codigo,))
             hilo.start()
+            hilo.join()
             self._creador = False
             self._visible = 0
 
