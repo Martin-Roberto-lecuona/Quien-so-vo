@@ -14,6 +14,7 @@ PADDING_X = 5
 PADDING_Y = 8
 MAX_LINEAS = 3
 banReceive = False
+banWait = False
 maxMensajes = 5 
 cantMensajes = 0
 class ChatHistory:
@@ -36,12 +37,13 @@ class ChatHistory:
                 if not datos:
                     break
                 mensaje_recibido = str(datos.decode())
+                print("mensaje_recibido" + mensaje_recibido)
                 match_adivinar = re.match(r'^/adivinar (\d+)$', mensaje_recibido)
                 match_ganaste = re.match(r'^/ganaste$', mensaje_recibido)
                 match_perdiste = re.match(r'^/perdiste$', mensaje_recibido)
-                print(mensaje_recibido)
+                print("mensaje_recibido" + mensaje_recibido)
                 if match_adivinar:
-                    self._adivinado = int(match_adivinar.group(1))
+                    self._adivinado = int(mensaje_recibido[1:])
                 elif match_ganaste or match_perdiste:
                     self._win_response = mensaje_recibido[1:]
                 else:
@@ -94,8 +96,10 @@ class ChatHistory:
     
     def recive_command(self, text):
         global banReceive
+        global banWait
         self._linea = "/" + str(text)
         banReceive = True
+        banWait = True
         
     def recive_data_socket(self):
         # esperar lectura socket 
