@@ -34,7 +34,7 @@ class ChatHistory:
             else: 
                 if cantMensajes >= maxMensajes:
                     self._text = ""
-                    cantMensajes = 0     
+                    cantMensajes = 0  
                 datos = self._socket.recv(1024)
                 if not datos:
                     break
@@ -68,6 +68,7 @@ class ChatHistory:
         self._cant_lineas = 0
         self._mi_turno = creador
         self._socket = el_socket
+        self._socket.settimeout(2.0)
         print(f"socket en chat history {self._socket}")
         self._hilo_lectura = threading.Thread(target=self.manejar_conexion, args=(self._socket,))
         self._hilo_lectura.start()
