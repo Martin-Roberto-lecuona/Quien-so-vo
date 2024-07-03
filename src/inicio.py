@@ -1,5 +1,6 @@
 import os
 import socket
+import sys
 import threading
 import pyray as rl
 from cryptography.fernet import Fernet
@@ -94,14 +95,19 @@ class Inicio:
                 self._creador = True
                 self._visible = 0
             except exception.PyngrokNgrokError:
-                exit()
+                sys.exit()
         elif rl.check_collision_point_rec(punto,self._unirse_partida):
             codigo = input("Ingresar codigo: ")
-            hilo = threading.Thread(target=self.unirse_partida, args=(codigo,))
-            hilo.start()
-            hilo.join()
+            tries = 0
+            while(self._socket == None and tries > 5):
+                hilo = threading.Thread(target=self.unirse_partida, args=(codigo,))
+                hilo.start()
+                hilo.join()
+                tries+=1
+            if (self._socket == None):
+                sys.exit()
             self._creador = False
-            self._visible = 0
+            self._visible = 0 
 
         return rl.check_collision_point_rec(punto,self._fondo)
 

@@ -29,9 +29,9 @@ class Final:
         self._bkg_heigh = bkg_heigh
 
     def dibujar(self):
-        text = "PERDISTEEE"
+        text = "GANASSSTE"
         if self._ganar:
-            text = "GANASSSTE"
+            text = "PERDISTEEE"
         try:
             self.dibujar_fondo()
             self.dibujar_titulo(text)
