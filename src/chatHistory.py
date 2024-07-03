@@ -35,7 +35,7 @@ class ChatHistory:
                 datos = self._socket.recv(1024)
                 if not datos:
                     break
-                mensaje_recibido = datos.decode()
+                mensaje_recibido = str(datos.decode())
                 match_adivinar = re.match(r'^/adivinar (\d+)$', mensaje_recibido)
                 match_ganaste = re.match(r'^/ganaste$', mensaje_recibido)
                 match_perdiste = re.match(r'^/perdiste$', mensaje_recibido)
@@ -93,7 +93,7 @@ class ChatHistory:
     
     def recive_command(self, text):
         global banReceive
-        self._linea = "/" + text
+        self._linea = "/" + str(text)
         banReceive = True
         
     def recive_data_socket(self):
