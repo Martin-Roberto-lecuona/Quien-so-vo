@@ -4,7 +4,7 @@ import threading
 import pyray as rl
 from cryptography.fernet import Fernet
 import socket
-from pyngrok import ngrok
+from pyngrok import ngrok, exception
 import requests
 from constants import base_url
 
@@ -93,7 +93,7 @@ class Inicio:
                 hilo.join()
                 self._creador = True
                 self._visible = 0
-            except Exception.PyngrokNgrokError:
+            except exception.PyngrokNgrokError:
                 exit()
         elif rl.check_collision_point_rec(punto,self._unirse_partida):
             codigo = input("Ingresar codigo: ")
