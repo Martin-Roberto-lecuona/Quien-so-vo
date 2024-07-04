@@ -1,4 +1,4 @@
-# Quien So Vo!
+# Quien so vo!
 
 **Juego argentino de "Quién es Quién" versión online.**
 
@@ -28,6 +28,6 @@ Para llevar a cabo dicho software, se utilizó el lenguaje de programación Pyth
 
 Uno de los jugadores hará de servidor y el otro de cliente. Cada uno empleará un hilo para evaluar si es su turno o no, llevando a cabo la correspondiente comunicación entre ellos mediante el uso de sockets.
 
-# Diagragama
+# Diagrama
 ![image](https://github.com/Martin-Roberto-lecuona/Quien-so-vo/assets/49318876/09e1534d-5255-4447-a54e-af82badde21e)
 
