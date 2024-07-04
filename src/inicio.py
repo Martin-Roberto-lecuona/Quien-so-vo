@@ -1,4 +1,7 @@
+import json
+import os
 import socket
+import sys
 import threading
 import pyray as rl
 from cryptography.fernet import Fernet
@@ -39,6 +42,7 @@ class Inicio:
         self._visible = 1
         self._socket = None
         self._creador = None
+        self._codigo = "codigo de sala: "
 
     def dibujar(self):
         try:
@@ -49,18 +53,25 @@ class Inicio:
             self.dibujar_boton_iniciar_partida()
 
             self.dibujar_boton_unirse_a_partida()
+
+            # self.dibujar_codigo()
         except ZeroDivisionError:
             print("ERROR DE TEXTURA")
             exit()
 
-
+    def dibujar_codigo(self):
+        print(f"entra a dibujar {self._codigo}")
+        TAM_FONT_RTA=30
+        measure = rl.measure_text_ex(rl.get_font_default(), str(self._codigo),TAM_FONT_RTA,0.0)
+        rl.draw_text( str(self._codigo), int(self._crear_partida.x + self._crear_partida.width/2 - (measure.x/2)),
+                         int(50 + self._crear_partida.y + self._crear_partida.height/2 - (measure.y/2)), TAM_FONT_RTA, rl.WHITE)
     def dibujar_titulo(self):
         TAM_FONT_TITULO = 70
         rl.draw_rectangle_rec(self._titulo,rl.YELLOW)
         texto_titulo = "Quien so vo?"
-        tt_measure = rl.measure_text_ex(rl.get_font_default(),texto_titulo,TAM_FONT_TITULO,0.0)
-        rl.draw_text(texto_titulo, int(self._titulo.x + self._titulo.width/2 - (tt_measure.x/2)),
-                         int(self._titulo.y+self._titulo.height/2-(tt_measure.y/2)),TAM_FONT_TITULO,rl.BLACK)
+        measure = rl.measure_text_ex(rl.get_font_default(),texto_titulo,TAM_FONT_TITULO,0.0)
+        rl.draw_text(texto_titulo, int(self._titulo.x + self._titulo.width/2 - (measure.x/2)),
+                         int(self._titulo.y+self._titulo.height/2-(measure.y/2)),TAM_FONT_TITULO,rl.BLACK)
 
     def dibujar_fondo(self):
         escala_ancho = self._fondo.width / self._textura.width
@@ -93,14 +104,20 @@ class Inicio:
                 self._creador = True
                 self._visible = 0
             except exception.PyngrokNgrokError:
-                exit()
+                sys.exit()
         elif rl.check_collision_point_rec(punto,self._unirse_partida):
             codigo = input("Ingresar codigo: ")
-            hilo = threading.Thread(target=self.unirse_partida, args=(codigo,))
-            hilo.start()
-            hilo.join()
+            tries = 0
+            while(self._socket == None and tries < 6):
+                hilo = threading.Thread(target=self.unirse_partida, args=(codigo,))
+                hilo.start()
+                hilo.join()
+                tries+=1
+            if (self._socket == None):
+                sys.exit()
+
             self._creador = False
-            self._visible = 0
+            self._visible = 0 
 
         return rl.check_collision_point_rec(punto,self._fondo)
 
@@ -131,7 +148,7 @@ class Inicio:
             return response.json()
         else:
             print("Error al agregar el texto:", response.status_code, response.json())
-            exit(-1)
+            exit()
 
     def crear_partida(self) -> socket:
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -143,14 +160,14 @@ class Inicio:
         url_tunel = ngrok.connect(puerto, "tcp")
         url_cifrada = self.cifrar_datos(url_tunel.public_url)
         response_api = self.add_text_api(url_cifrada)
-        print(f"Partida creada. codigo de sala: {response_api}")
+        # self._codigo = "codigo de sala: " + str(response_api['id'])
+        print(f"Partida creada. codigo sala :{response_api}")
         print(f"Esperando conexión en el puerto: {puerto}")
-
         conn, addr = server_socket.accept()
         print(f"Conectado con {addr}")
         print(f"socket: {conn}")
 
-        return conn
+        self._socket = conn
     
     def get_text_api(self,codigo_sala):
         url = f"{base_url}/get/{codigo_sala}"
@@ -159,7 +176,7 @@ class Inicio:
             return response.json()
         else:
             print("Error al obtener el texto:", response.status_code, response.json())
-            exit(-1)
+            exit()
 
 
     def unirse_partida(self,code):
@@ -176,5 +193,5 @@ class Inicio:
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_socket.connect((ip_remota, puerto))
         print(f"Conectado al servidor en IP: {ip_remota}, Puerto: {puerto}")
-
-        return client_socket
+        
+        self._socket = client_socket
