@@ -115,6 +115,7 @@ class Inicio:
                 tries+=1
             if (self._socket == None):
                 sys.exit()
+
             self._creador = False
             self._visible = 0 
 
